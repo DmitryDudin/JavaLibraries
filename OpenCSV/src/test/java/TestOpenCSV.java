@@ -3,7 +3,7 @@ import org.junit.Test;
 
 import java.text.ParseException;
 
-public class TestClass {
+public class TestOpenCSV {
 
     private static String csvString;
 
