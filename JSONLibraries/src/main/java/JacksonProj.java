@@ -3,12 +3,14 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import entity.Student;
 import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class JacksonProj {
     public String addChineseTranslation(String values) throws JSONException, IOException {
@@ -69,4 +71,26 @@ public class JacksonProj {
         return root.has("zh");
 //        return values.contains("\"zh\"");
     }
+
+    //    Convert a JSON Array format to a Java List object.
+    public static List<Student> jsonArrayStringToList(String jsonArrayString) throws IOException {
+//      jsonArrayString = "[{\"name\":\"mkyong\"}, {\"name\":\"laplap\"}]";
+        ObjectMapper mapper = new ObjectMapper();
+        List<Student> list = mapper.readValue(jsonArrayString, new TypeReference<List<Student>>() {
+        });
+        return list;
+    }
+
+
+    //    Convert a JSON to a Map
+    public static Map jsonMapStringToMap(String jsomString) throws IOException {
+//        jsomString = "{\"name\":\"mkyong\", \"age\":33}";
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> map = mapper.readValue(jsomString, new TypeReference<Map<String, Object>>() {
+        });
+        return map;
+    }
 }
+//  https://github.com/FasterXML/jackson-databind/
+//  http://www.baeldung.com/jackson-collection-array
+//  https://www.mkyong.com/java/jackson-2-convert-java-object-to-from-json/
