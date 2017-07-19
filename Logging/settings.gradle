@@ -1,2 +1,5 @@
 rootProject.name = 'Logging'
-
+include 'Log4j1'
+include 'Log4j2'
+include 'Slf4j'
+include 'LogBack'

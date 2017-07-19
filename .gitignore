@@ -22,3 +22,4 @@ out
 gen
 *.gradle/
 *build/
+/Logging/Log4j1/logFileFolder/
