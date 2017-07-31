@@ -1,7 +1,7 @@
 import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
-import org.apache.catalina.core.StandardContext;
 import org.apache.catalina.startup.Tomcat;
+import servlet.IndexServlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
-import java.net.URL;
-import java.net.URLClassLoader;
 
 //import org.apache.catalina.startup.Tomcat;
 public class ServerClass {
@@ -83,20 +81,26 @@ public class ServerClass {
 
     public static void main(String[] args)
             throws LifecycleException, InterruptedException, ServletException {
+        String property = System.getProperty("java.io.tmpdir");
+        String absolutePath = new File("./WebSocketChatServer").getAbsolutePath();
+
         Tomcat tomcat = new Tomcat();
         tomcat.setPort(8089);
 
-        Context ctx = tomcat.addContext("/", new File(".").getAbsolutePath());
+//        Context ctx = tomcat.addContext("/", new File(".").getAbsolutePath());
+        Context ctx = tomcat.addContext("/", new File("./WebSocketChatServer").getAbsolutePath());
 
         Tomcat.addServlet(ctx, "hello", new HttpServlet() {
             protected void service(HttpServletRequest req, HttpServletResponse resp)
                     throws ServletException, IOException {
                 Writer w = resp.getWriter();
-                w.write("Hello, World!");
-                w.flush();
+                w.write("Hello, World!\n");
+                    w.flush();
             }
         });
-        ctx.addServletMapping("/*", "hello");
+        Tomcat.addServlet(ctx, "gog", IndexServlet.class.toString());//ClassNotFoundException
+        ctx.addServletMapping("/h", "hello");
+        ctx.addServletMapping("/go", "gog");
 
         tomcat.start();
         tomcat.getServer().await();
