@@ -1,0 +1,10 @@
+------------------------------------------------------------------------------------------------------------------------
+If the equals method doesn't check all the fields, you can use the Unitils http://unitils.org/ ReflectionAssert class.
+Calling
+ReflectionAssert.assertReflectionEquals(expectedCollection,actualCollection)
+
+will compare each element reflectively field by field (and this doesn't just apply for collections, it will work
+for any object).
+------------------------------------------------------------------------------------------------------------------------
+https://www.mkyong.com/unittest/junit-how-to-test-a-list/    -   JUnit – How to test a List
+------------------------------------------------------------------------------------------------------------------------
