@@ -1,11 +1,15 @@
 import org.fluttercode.datafactory.impl.DataFactory;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class GenerateTestCollections {
+    private long i = 0;
+
     enum UserRole {
         ADMIN, USER, GUEST
     }
@@ -101,11 +105,50 @@ public class GenerateTestCollections {
                     "    lastName=" + df.getLastName() +
                     "    userRole=" + userRole;
 
-            System.out.println(name);
-            new User(i, df.getFirstName(), df.getLastName(), String.valueOf(df.getNumberBetween(000000, 999999)), df.getCity(), userRole);
-            Stream.generate(()->new User(Long., df.getFirstName(), df.getLastName(), String.valueOf(df.getNumberBetween(000000, 999999)), df.getCity(), userRole))
-                    .limit(1000000)
-                    .collect(Collectors.toList());
+//            System.out.println(name);
         }
+
+        //-----------------------------------------
+        long start = System.nanoTime();
+        List<User> users = Stream.generate(() -> {
+            Long id = i++;
+            String firstName = df.getFirstName();
+            String lastName = df.getLastName();
+            String phone = String.valueOf(df.getNumberBetween(000000, 999999));
+            String city = df.getCity();
+            UserRole userRole = UserRole.values()[randomGenerator.nextInt(UserRole.values().length)];
+            return new User(id, firstName, lastName, phone, city, userRole);
+        })
+//                .peek(System.out::println)
+                .limit(1000000)
+                .collect(Collectors.toList());
+        long end = System.nanoTime();
+        System.out.println("time1=" + (end - start));
+        System.out.println(users.size());
+//-----------------------------------------
+        i = 0;
+        start = System.nanoTime();
+//        List<User> users1 = new ArrayList<User>(1000000);
+//        List<User> users1;
+        List<User> users1 = Stream.generate(() -> {
+            Long id = i++;
+            String firstName = df.getFirstName();
+            String lastName = df.getLastName();
+            String phone = String.valueOf(df.getNumberBetween(000000, 999999));
+            String city = df.getCity();
+            UserRole userRole = UserRole.values()[randomGenerator.nextInt(UserRole.values().length)];
+            return new User(id, firstName, lastName, phone, city, userRole);
+        })
+//                .peek(System.out::println)
+                .limit(1000000)
+                .collect(Collectors.toList());
+        end = System.nanoTime();
+        System.out.println("time2=" + (end - start));
+
+        System.out.println(users1.size());
+    }
+
+    private Long genId() {
+        return i++;
     }
 }
