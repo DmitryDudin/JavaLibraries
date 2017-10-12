@@ -6,9 +6,16 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Logger name="ua.org.javatraining" level="INFO"/>
+        <Logger name="ua.org.javatraining" level="DEBUG"/>
         <Root level="error">
             <AppenderRef ref="Console"/>
         </Root>
     </Loggers>
 </Configuration>
+
+        <!--
+        PatternLayout:
+
+        %n - next line
+
+        -->
