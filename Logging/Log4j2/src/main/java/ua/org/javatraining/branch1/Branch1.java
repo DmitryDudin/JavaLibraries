@@ -7,19 +7,19 @@ public class Branch1 {
     private final Logger LOG = LogManager.getLogger(Branch1.class);
 
     public void logInfoBranch1() {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 3; i++) {
             LOG.info("\"branch1 message - " + i + "\"");
         }
     }
 
     public void logDebugBranch1() {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 3; i++) {
             LOG.debug("\"branch1 message - " + i + "\"");
         }
     }
 
     public void logErrorBranch1() {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 3; i++) {
             LOG.error("\"branch1 message - " + i + "\"");
         }
     }

@@ -1,21 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration>
+<Configuration monitorInterval="30">
     <Appenders>
+
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <!--<PatternLayout pattern="[%d] [%t] %-5level %logger{36} - %msg%n"/>-->
+            <PatternLayout pattern="%d{ISO8601} [%-5p][%-16.16t][%32.32c] - %m%n"/>
         </Console>
+
+        <File name="fileBranch1" fileName="log/branch1.txt">
+            <PatternLayout>
+                <Pattern>%d %p %c %m %ex{2} %n</Pattern>
+            </PatternLayout>
+        </File>
+        <File name="fileBranch2" fileName="log/branch2.txt">
+            <PatternLayout>
+                <Pattern>%d %p %c %m %ex{2} %n</Pattern>
+            </PatternLayout>
+        </File>
+
+        <File name="fileBranch3" fileName="log/branch3.txt">
+            <PatternLayout>
+                <Pattern>%d %p %c %m %ex{2} %n</Pattern>
+            </PatternLayout>
+        </File>
+
+        <File name="fileBranch3_1" fileName="log/branch3_1.txt">
+            <PatternLayout>
+                <Pattern>%d %p %c %m %ex{2} %n</Pattern>
+            </PatternLayout>
+        </File>
+
+
+        <File name="rootFile" fileName="log/rootFile.txt">
+            <PatternLayout>
+                <Pattern>[%d] %p %c %m %ex{2} %n</Pattern>
+            </PatternLayout>
+        </File>
+        <Async name="AsyncRoot">
+            <AppenderRef ref="rootFile"/>
+        </Async>
+        <!--RollingFileAppender-->
+        <!--maximumFileSize-->
+        <!--maxBackupIndex-->
+
+        DailyRollingFileAppender
     </Appenders>
     <Loggers>
-        <Logger name="ua.org.javatraining" level="DEBUG"/>
-        <Root level="error">
+        <!--<Logger name="ua.org.javatraining" level="INFO"/>-->
+
+        <!--<Logger name="ua.org.javatraining.branch1" level="info" additivity="true">
             <AppenderRef ref="Console"/>
+        </Logger>-->
+
+        <Logger name="ua.org.javatraining.branch1" level="debug" additivity="false">
+            <AppenderRef ref="fileBranch1"/>
+        </Logger>
+
+        <Logger name="ua.org.javatraining.branch2" level="info" additivity="true">
+            <AppenderRef ref="fileBranch2"/>
+        </Logger>
+
+        <Logger name="ua.org.javatraining.branch3" level="error" additivity="true">
+            <AppenderRef ref="fileBranch3"/>
+        </Logger>
+
+        <Logger name="ua.org.javatraining.branch3.branch3_1" level="debug" additivity="true">
+            <AppenderRef ref="fileBranch3_1"/>
+        </Logger>
+        <!--if need that in same package in different appender write on different levels-->
+        <Logger name="ua.org.javatraining.branch3.branch3_1" level="debug" additivity="true">
+            <AppenderRef ref="fileBranch3_1"/>
+        </Logger>
+
+        <Root level="debug">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncRoot"/>
         </Root>
     </Loggers>
 </Configuration>
 
         <!--
-        PatternLayout:
 
-        %n - next line
+******************
+PatternLayout:
+
+%n - next line
+%d{'format'}  - date/time format
+%p  - LOG level
+%c{1.2.3.4}  -  Outputs the name of the logger that published the logging event, %c{precision}  {1.2.3.4}  {                                                                                                2}
+[%t]  -  thread name (  '[]'  - decoration)
+%ex  - log exception
+%l  - location
+******************
+Logging levels:
+
+Standard Level 	intLevel
+OFF 	        0
+FATAL 	        100
+ERROR 	        200
+WARN 	        300
+INFO 	        400
+DEBUG 	        500
+TRACE       	600
+ALL 	        Integer.MAX_VALUE
+
+
+
+
+
 
         -->
