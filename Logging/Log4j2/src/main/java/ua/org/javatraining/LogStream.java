@@ -13,7 +13,7 @@ public class LogStream {
     public static void generateInfinityLog() {
 //        final int[] i = {0};
         Stream.generate(() -> i++)
-                .peek((j) -> timeDelay(1000))
+                .peek((j) -> timeDelay(500))
                 .peek((j) -> LOG.error("\"Generate error LOG - " + j + "\""))
                 .peek((j) -> LOG.info("\"Generate info LOG - " + j + "\""))
                 .forEach((j) -> LOG.debug("\"Generate debug LOG - " + j + "\""));
