@@ -4,41 +4,41 @@
 
         <Console name="Console" target="SYSTEM_OUT">
             <!--<PatternLayout pattern="[%d] [%t] %-5level %logger{36} - %msg%n"/>-->
-            <PatternLayout pattern="%d{ISO8601} [%-5p][%-16.16t][%32.32c] - %m%n"/>
+            <PatternLayout pattern="%d{ISO8601} [%-5p][%-10.10t][%32.32c]%x%X - %m%n"/>
         </Console>
 
         <File name="fileBranch1" fileName="log/branch1.txt">
             <PatternLayout>
-                <Pattern>%d %p %c %m %ex{2} %n</Pattern>
+                <Pattern>%d %p %c %m %ex{2}%x%X %n</Pattern>
             </PatternLayout>
         </File>
         <File name="fileBranch2" fileName="log/branch2.txt">
             <PatternLayout>
-                <Pattern>%d %p %c %m %ex{2} %n</Pattern>
+                <Pattern>%d %p %c %m %ex{2}%x%X %n</Pattern>
             </PatternLayout>
         </File>
 
         <File name="fileBranch3" fileName="log/branch3.txt">
             <PatternLayout>
-                <Pattern>%d %p %c %m %ex{2} %n</Pattern>
+                <Pattern>%d %p %c %m %ex{2}%x%X %n</Pattern>
             </PatternLayout>
         </File>
 
         <File name="fileBranch3_1_debug" fileName="log/fileBranch3_1_debug.log">
             <PatternLayout>
-                <Pattern>%d{ISO8601} [%-5p][%-16.10t][%32.32c] - %m%n</Pattern>
+                <Pattern>%d{ISO8601} [%-5p][%-16.10t][%32.32c]%x%X - %m%n</Pattern>
             </PatternLayout>
         </File>
         <File name="fileBranch3_1_info" fileName="log/fileBranch3_1_info.log">
             <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
             <PatternLayout>
-                <Pattern>%d{ISO8601} [%-5p][%-16.10t][%32.32c] - %m%n</Pattern>
+                <Pattern>%d{ISO8601} [%-5p][%-16.10t][%32.32c]%x%X - %m%n</Pattern>
             </PatternLayout>
         </File>
         <File name="fileBranch3_1_error" fileName="log/fileBranch3_1_error.log">
             <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
             <PatternLayout>
-                <Pattern>%d{ISO8601} [%-5p][%-16.10t][%32.32c] - %m%n</Pattern>
+                <Pattern>%d{ISO8601} [%-5p][%-16.10t][%32.32c]%x%X - %m%n</Pattern>
             </PatternLayout>
         </File>
 
@@ -56,7 +56,7 @@
             <FilePattern>log/rootLog-%d{yyyy-MM-dd-HH}-%i.log.gz</FilePattern>
             <PatternLayout>
                 <Pattern>
-                    %d{ISO8601} [%-5p][%-16.16t][%32.32c] - %m%n
+                    %d{ISO8601} [%-5p][%-10.10t][%32.32c]%x%X - %m%n
                 </Pattern>
             </PatternLayout>
             <Policies>
@@ -71,13 +71,26 @@
         <File name="rootFileErrors" fileName="log/rootFileErrors.log">
             <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
             <PatternLayout>
-                <Pattern>%d{ISO8601} [%-5p][%-16.16t][%32.32c] - %m%n</Pattern>
+                <Pattern>%d{ISO8601} [%-5p][%-16.16t][%32.32c]%x%X - %m%n</Pattern>
             </PatternLayout>
         </File>
 
+        <RollingFile name="rootFileRegexFilter" fileName="log/rootFileRegexFilter.log" >
+            <RegexFilter regex =".*2.*" onMatch="ACCEPT" onMismatch="DENY"/> <!--filter message with "2" in message-->
+            <FilePattern>log/rootLog-%d{yyyy-MM-dd-HH}-%i.log.gz</FilePattern>
+            <PatternLayout>
+                <Pattern>
+                    %d{ISO8601} [%-5p][%-10.10t][%32.32c]%x%X - %m%n
+                </Pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="50 KB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="5"/>
+        </RollingFile>
 
-        DailyRollingFileAppender
     </Appenders>
+
     <Loggers>
         <!--<Logger name="ua.org.javatraining" level="INFO"/>-->
 
@@ -85,7 +98,7 @@
             <AppenderRef ref="Console"/>
         </Logger>-->
 
-        <Logger name="ua.org.javatraining.branch1" level="debug" additivity="false">
+        <Logger name="ua.org.javatraining.branch1" level="trace" additivity="false">
             <AppenderRef ref="fileBranch1"/>
         </Logger>
 
@@ -108,6 +121,7 @@
             <AppenderRef ref="Console"/>
             <AppenderRef ref="AsyncRoot"/>
             <AppenderRef ref="rootFileErrors"/>
+            <AppenderRef ref="rootFileRegexFilter"/>
         </Root>
     </Loggers>
 </Configuration>
@@ -124,6 +138,8 @@ PatternLayout:
 [%t]  -  thread name (  '[]'  - decoration)
 %ex  - log exception
 %l  - location
+%x  - Outputs the Thread Context Stack (also known as the Nested Diagnostic Context or NDC)
+%X  - Outputs the Thread Context Map (also known as the Mapped Diagnostic Context or MDC)
 ******************
 Logging levels:
 
@@ -137,9 +153,13 @@ DEBUG 	        500
 TRACE       	600
 ALL 	        Integer.MAX_VALUE
 
+ThresholdFilter added to appender set log level despite the level of the logger =>
+there is an opportunity to set different appender levels for the same package level
+(Можно сконфигурировать вывод так, чтобы в один аппендер сообщения от определенного логгера
+выводились на одном уровне, а в другой на другом)
 
-
-
+ The Thread Context Map is the equivalent of the MDC and the Thread Context Stack is the equivalent of the NDC.
+Since key/value pairs are more flexible, the Thread Context Map is recommended.
 
 
         -->

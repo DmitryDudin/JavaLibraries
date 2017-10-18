@@ -2,12 +2,15 @@ package ua.org.javatraining;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.ThreadContext;
 import org.junit.Ignore;
 import org.junit.Test;
 import ua.org.javatraining.branch1.Branch1;
 import ua.org.javatraining.branch2.Branch2;
 import ua.org.javatraining.branch3.Branch3;
 import ua.org.javatraining.branch3.branch3_1.Branch3_1;
+
+import java.util.UUID;
 
 //https://logging.apache.org/log4j/2.x/manual/customconfig.html
 public class Log4j2TestClass {
@@ -32,6 +35,7 @@ public class Log4j2TestClass {
     @Test
     public void branch1Tests() {
         Branch1 branch1 = new Branch1();
+        branch1.logTraceBranch1();
         branch1.logDebugBranch1();
         branch1.logInfoBranch1();
         branch1.logErrorBranch1();
@@ -58,10 +62,23 @@ public class Log4j2TestClass {
 
     @Test
     public void branch3_1Tests() {
+//        LOG.info("UUID = {}", UUID.randomUUID().toString());
+        ThreadContext.push("UUID_1");
+        String value = "value_1";
+        ThreadContext.put("key", value);
         Branch3_1 branch3_1 = new Branch3_1();
         branch3_1.logDebugBranch3_1();
         branch3_1.logInfoBranch3_1();
         branch3_1.logErrorBranch3_1();
+
+        ThreadContext.push("UUID_2");
+        value = "value_2";
+        ThreadContext.put("key", value);
+
+        branch3_1.logDebugBranch3_1();
+        branch3_1.logInfoBranch3_1();
+        branch3_1.logErrorBranch3_1();
+        ThreadContext.clearAll();
     }
 
     @Ignore
