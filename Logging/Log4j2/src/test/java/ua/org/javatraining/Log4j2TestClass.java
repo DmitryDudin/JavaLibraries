@@ -63,7 +63,7 @@ public class Log4j2TestClass {
     @Test
     public void branch3_1Tests() {
 //        LOG.info("UUID = {}", UUID.randomUUID().toString());
-        ThreadContext.push("UUID_1");
+//        ThreadContext.push("UUID_1");
         String value = "value_1";
         ThreadContext.put("key", value);
         Branch3_1 branch3_1 = new Branch3_1();
@@ -71,7 +71,7 @@ public class Log4j2TestClass {
         branch3_1.logInfoBranch3_1();
         branch3_1.logErrorBranch3_1();
 
-        ThreadContext.push("UUID_2");
+//        ThreadContext.push("UUID_2");
         value = "value_2";
         ThreadContext.put("key", value);
 

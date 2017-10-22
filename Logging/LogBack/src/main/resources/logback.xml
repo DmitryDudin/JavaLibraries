@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="5 seconds">
+
+    <variable name="ROOT_LEVEL" value="ERROR"/>
+    <property name="USER_HOME" value="/home/dmitry"/>
+    <!--java -DUSER_HOME="/home/sebastien" MyApp2  -  start with system property-->
+
+    <!--When multiple variables are needed, it may be more convenient to create a separate file
+    that will contain all the variables-->
+    <!--<property file="src/main/java/chapters/configuration/variables1.properties" />-->
+
+    <!--************************************************************************************-->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[%d{ISO8601}][%-5level][%-6.6thread][%logger{36}] - %msg%n</pattern>
+        </encoder>
+        <!--<layout></layout>-->
+    </appender>
+    <!--************************************************************************************-->
+    <!--<appender name="ROOT_ERROR_FILE" class="">
+
+    </appender>
+    <async>
+
+    </async>-->
+    <!--************************************************************************************-->
+    <!--<appender name="ROOT_FILE" class="">
+
+    </appender>
+    <async>
+
+    </async>-->
+    <!--************************************************************************************-->
+    <!--<logger name="ERROR_FILE" level="error" additivity="">
+        <appender-ref ref="ASYNC_ROOT_ERROR_FILE"/>
+
+    </logger>-->
+
+    <logger name="ua.org.javatraining" level="debug"/> <!--в таком варианте аппендер наследуется от root!!!-->
+    <logger name="ua.org.javatraining.branch1" level="debug" additivity="true"/>
+    <logger name="ua.org.javatraining.branch2" level="INFO" additivity="true"/>
+    <logger name="ua.org.javatraining.branch3" level="ERROR"/>
+
+
+    <root level="off">
+        <appender-ref ref="CONSOLE"/>
+        <!--<appender-ref ref="ASYNC_ROOT_FILE"/>-->
+    </root>
+    <!--************************************************************************************-->
+
+</configuration>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration monitorInterval="30">
+<Configuration monitorInterval="5">
     <Appenders>
 
         <Console name="Console" target="SYSTEM_OUT">
@@ -52,7 +52,7 @@
             <AppenderRef ref="rootFile"/>
         </Async>-->
 
-        <RollingFile name="rootFile" fileName="log/rootLog.log" >
+        <RollingFile name="rootFile" fileName="log/rootLog.log">
             <FilePattern>log/rootLog-%d{yyyy-MM-dd-HH}-%i.log.gz</FilePattern>
             <PatternLayout>
                 <Pattern>
@@ -75,8 +75,8 @@
             </PatternLayout>
         </File>
 
-        <RollingFile name="rootFileRegexFilter" fileName="log/rootFileRegexFilter.log" >
-            <RegexFilter regex =".*2.*" onMatch="ACCEPT" onMismatch="DENY"/> <!--filter message with "2" in message-->
+        <RollingFile name="rootFileRegexFilter" fileName="log/rootFileRegexFilter.log">
+            <RegexFilter regex=".*2.*" onMatch="ACCEPT" onMismatch="DENY"/> <!--filter message with "2" in message-->
             <FilePattern>log/rootLog-%d{yyyy-MM-dd-HH}-%i.log.gz</FilePattern>
             <PatternLayout>
                 <Pattern>
@@ -104,6 +104,7 @@
 
         <Logger name="ua.org.javatraining.branch2" level="info" additivity="true">
             <AppenderRef ref="fileBranch2"/>
+            <AppenderRef ref="Console"/>
         </Logger>
 
         <Logger name="ua.org.javatraining.branch3" level="error" additivity="true">
