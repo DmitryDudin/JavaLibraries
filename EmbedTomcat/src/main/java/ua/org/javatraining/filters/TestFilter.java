@@ -19,8 +19,7 @@ public class TestFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-        LOG.info("TestFilter before request");
-        LOG.info("TestFilter after request");
+        LOG.info("TestFilter dofilter!");
         filterChain.doFilter(request, response);
     }
 
