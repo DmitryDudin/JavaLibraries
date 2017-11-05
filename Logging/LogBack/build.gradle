@@ -40,8 +40,10 @@ task copyRuntimeLibs(type: Copy) {
 
 }
 
-/*jar {
-    manifest {//TODO fix main class
+/*
+//fatjar:
+jar {
+    manifest {
         attributes 'Main-Class': 'ua.org.javatraining.StartClass'
         attributes 'Class-Path': configurations.compile.collect { "lib/" + it.getName() }.join(' ')
     }

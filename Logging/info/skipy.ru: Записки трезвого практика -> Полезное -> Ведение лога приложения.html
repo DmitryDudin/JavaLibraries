@@ -1626,10 +1626,10 @@
     &lt;<span class="tag">/filter</span>&gt;
 &lt;<span class="tag">/appender</span>&gt;</pre>
 
-        <pre><span class="tag">log4j.appender.bulk.filter.a</span>=<span class="value">org.apache.log4j.varia.LevelRangeFilter</span>
-<span class="tag">log4j.appender.bulk.filter.a.LevelMin</span>=<span class="value">WARN</span>
-<span class="tag">log4j.appender.bulk.filter.a.LevelMax</span>=<span class="value">FATAL</span>
-<span class="tag">log4j.appender.bulk.filter.a.AcceptOnMatch</span>=<span class="value">TRUE</span></pre>
+        <pre><span class="tag">log4j.appender.bulk.filters.a</span>=<span class="value">org.apache.log4j.varia.LevelRangeFilter</span>
+<span class="tag">log4j.appender.bulk.filters.a.LevelMin</span>=<span class="value">WARN</span>
+<span class="tag">log4j.appender.bulk.filters.a.LevelMax</span>=<span class="value">FATAL</span>
+<span class="tag">log4j.appender.bulk.filters.a.AcceptOnMatch</span>=<span class="value">TRUE</span></pre>
 
         <p>Порядок фильтров для XML-конфигурации определяется порядком их описания (согласно DTD фильтры конфигурируются
             <em>после layout-ов</em>). В случае properties-конфигурации фильтры <em>сортируются по имени</em>.

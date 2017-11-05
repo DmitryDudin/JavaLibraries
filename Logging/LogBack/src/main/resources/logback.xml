@@ -33,7 +33,7 @@
         <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
             <maxFileSize>50KB</maxFileSize>
         </triggeringPolicy>
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+        <filter class="ch.qos.logback.classic.filters.ThresholdFilter">
             <level>ERROR</level>
         </filter>
     </appender>
