@@ -1,0 +1,53 @@
+https://github.com/GoogleCloudPlatform/java-docs-samples/blob/master/speech/cloud-client/pom.xml
+
+https://github.com/GoogleCloudPlatform/java-docs-samples/blob/master/speech/cloud-client/src/main/java/com/example/speech/QuickstartSample.java
+
+https://cloud.google.com/speech-to-text/docs/async-recognize#speech-async-recognize-gcs-java
+
+
+Credentials:
+    https://cloud.google.com/speech-to-text/docs/reference/libraries?hl=ru
+    https://cloud.google.com/docs/authentication/production#providing_credentials_to_your_application
+    https://github.com/GoogleCloudPlatform/java-docs-samples
+
+
+    Credentials Example
+    The documentation for Application Default Credentials.
+
+            BigQuery bigquery = BigQueryOptions.getDefaultInstance().getService();
+
+    The client library looks for credentials using the following rules:
+
+    GOOGLE_APPLICATION_CREDENTIALS environment variable, pointing to a service account key JSON file path.
+    Cloud SDK credentials gcloud auth application-default login
+    App Engine standard environment credentials.
+    Compute Engine credentials.
+    You can override this behavior using setCredentials in BigQueryOptions.newBuilder() by adding setCredentials(Credentials credentials) from ServiceOptions.builder and Credentials.
+____________________________________________________________________________________________________________
+
+Base64 Encoding Audio Content
+
+https://cloud.google.com/speech-to-text/docs/base64-encoding
+
+Create a JSON request file, inlining the base64-encoded audio within the request's content field:
+
+    {
+      "config": {
+        "encoding":"FLAC",
+        "sampleRateHertz":16000,
+        "languageCode":"en-US"
+      },
+      "audio": {
+        "content": "ZkxhQwAAACIQABAAAAUJABtAA+gA8AB+W8FZndQvQAyjv..."
+      }
+    }
+
+Embedding audio content programmatically:
+
+// Import the Base64 encoding library.
+import org.apache.commons.codec.binary.Base64;
+
+// Encode the speech.
+byte[] encodedAudio = Base64.encodeBase64(audio.getBytes());
+
+____________________________________________________________________________________________________________
