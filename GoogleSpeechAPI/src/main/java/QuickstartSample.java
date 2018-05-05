@@ -31,6 +31,12 @@ audio format != audio encoding
 
 */
 
+ /*// Import the Base64 encoding library.
+    import org.apache.commons.codec.binary.Base64;
+
+    // Encode the speech.
+    byte[] encodedAudio = Base64.encodeBase64(audio.getBytes());*/
+
     /**
      * Demonstrates using the Speech API to transcribe an audio file.
      */
