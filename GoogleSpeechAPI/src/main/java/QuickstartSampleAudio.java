@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
-public class QuickstartSample {
+public class QuickstartSampleAudio {
     /*https://cloud.google.com/docs/authentication/production
     https://cloud.google.com/billing/docs/how-to/manage-billing-account?hl=ru&visit_id=1-636604299121123873-3853186258&rd=2
     https://cloud.google.com/docs/authentication/getting-started#auth-cloud-implicit-java
