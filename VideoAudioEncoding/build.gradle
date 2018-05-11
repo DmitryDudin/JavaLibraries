@@ -1,0 +1,37 @@
+group 'ua.com.javatraining'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    logbackCoreVersion = '1.2.3'
+    logbackClassicVersion = '1.2.3'
+}
+
+dependencies {
+    testCompile(group: 'junit', name: 'junit', version: '4.12') {
+        exclude module: 'hamcrest-core'
+    }
+    testCompile(group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3')
+
+//    compile group: 'com.google.cloud', name: 'google-cloud-speech', version: '0.45.0-alpha'
+
+    // https://mvnrepository.com/artifact/io.humble/humble-video-all
+    compile group: 'io.humble', name: 'humble-video-all', version: '0.2.1'
+    // https://mvnrepository.com/artifact/commons-cli/commons-cli
+    compile group: 'commons-cli', name: 'commons-cli', version: '1.4'
+
+
+// https://mvnrepository.com/artifact/net.bramp.ffmpeg/ffmpeg
+    compile group: 'net.bramp.ffmpeg', name: 'ffmpeg', version: '0.6.2'
+
+
+    compile "ch.qos.logback:logback-core:${logbackCoreVersion}"
+    compile "ch.qos.logback:logback-classic:${logbackClassicVersion}"
+}
