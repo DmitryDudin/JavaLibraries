@@ -26,3 +26,13 @@ gen
 /Logging/LogBack/logs/
 gradle-wrapper.properties
 /GoogleSpeechAPI/filesExclude/
+
+*.wav
+*.3gp
+*.mp3
+*.mp4
+*.flac
+*.opus
+*.ogg
+*.raw
+.gitignore
