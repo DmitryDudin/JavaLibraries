@@ -1,4 +1,3 @@
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +32,7 @@ public class StringUtils {
     //Как найти целое слово в строке в java
     //with ApacheCommonsLang3
     public static void main(String[] args) throws FileNotFoundException {
-        String text = "I will come and meet you at the woods 123woods and all the woods";
+        String text = "I will come and meet you at the woods 123woods, and all the woods";
 
         List<String> tokens = new ArrayList<String>();
         tokens.add("123woods");
