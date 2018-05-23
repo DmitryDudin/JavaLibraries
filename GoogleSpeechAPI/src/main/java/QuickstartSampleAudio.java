@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.protobuf.ByteString;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -47,8 +48,8 @@ audio format != audio encoding
         SpeechSettings speechSettings = SpeechSettings.newBuilder().setCredentialsProvider(() -> credentials).build();
 
         // Instantiates a client
-//        try (SpeechClient speechClient = SpeechClient.create()) {//for environment variable GOOGLE_APPLICATION_CREDENTIALS
-        try (SpeechClient speechClient = SpeechClient.create(speechSettings)) {
+        try (SpeechClient speechClient = SpeechClient.create()) {//for environment variable GOOGLE_APPLICATION_CREDENTIALS
+//        try (SpeechClient speechClient = SpeechClient.create(speechSettings)) {
 
             // The path to the audio file to transcribe
             String fileName = "GoogleSpeechAPI/src/main/resources/" +
@@ -59,10 +60,22 @@ audio format != audio encoding
 //                    "ru_30sec_wav_16khz.wav";
 //                    "Slava2.wav";
 //                    "mp3_10sec_16KHz.mp3";//don't work
-                    "recForge2/16kHz_ru.flac";//!!!
+//                    "recForge2/16kHz_ru.flac";//!!!
 //                    "recForge2/16kHz_ru.wav";
 //                    "recForge2/16kHz_ru.ogg";
 //                    "recForge2/15s_48kHz_ru.opus";
+//
+//                    "finalExamples/tarasov_flac_1st.flac";//1
+//                    "finalExamples/tarasov_flac_2nd.flac";//2
+//                    "finalExamples/tarasov_flac_3rd.flac";//fu
+
+                    "finalExamples/Viktor_flac_1st.flac";//1
+//                    "finalExamples/Viktor_flac_2nd.flac";//1
+//                    "finalExamples/Viktor_flac_3rd.flac";//fu
+
+//                    "finalExamples/Vitaliy_flac_1st.flac";//2
+//                    "finalExamples/Vitaliy_flac_2nd.flac";//fu
+//                    "finalExamples/Vitaliy_flac_3rd.flac";//5
 
             // Reads the audio file into memory
             Path path = Paths.get(fileName);
@@ -85,9 +98,11 @@ audio format != audio encoding
                     .setMaxAlternatives(30)//максимальное количество альтернатив перевода
 //                    .setEnableWordTimeOffsets(true)//дополнительная информация о таймингах переведённых слов в ответе
                     //Phrase hints - слова которые мы ожидаем в записи
-                    .addSpeechContexts(SpeechContext.newBuilder().addAllPhrases(Arrays.asList("Добрый день",
-                            "Водка Гадость", "Camel", "лимонад", "капучино", "полет без фильтра",
-                            "может быть хотите кофе", "l&m")))
+//                    .addSpeechContexts(SpeechContext.newBuilder().addAllPhrases(Arrays.asList("Добрый день",
+//                            "Водка Гадость", "Camel", "лимонад", "капучино", "полет без фильтра",
+//                            "может быть хотите кофе", "l&m")))
+                    .addSpeechContexts(SpeechContext.newBuilder()
+                            .addAllPhrases(Arrays.asList("В продаже есть новый L&M Loft Double Splash с двумя капсулами со вкусом фруктов и летнего нектара")))
                     .build();
             RecognitionAudio audio = RecognitionAudio.newBuilder()
                     .setContent(audioBytes)
@@ -112,6 +127,18 @@ audio format != audio encoding
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private SpeechClient getSpeechClient() throws IOException {
+        String jsonPath = "/home/dmitrid/dev/PMU/pmu-voice-be/doc/key/PMU-Voice-ec7c06c94ac5.json";
+
+        GoogleCredentials credentials = GoogleCredentials
+                .fromStream(new FileInputStream(jsonPath))
+                .createScoped(Lists.newArrayList("https://www.googleapis.com/auth/cloud-platform"));
+        SpeechSettings speechSettings = SpeechSettings.newBuilder().setCredentialsProvider(() -> credentials).build();
+
+        SpeechClient speechClient = SpeechClient.create(speechSettings);
+        return speechClient;
     }
 
 }
