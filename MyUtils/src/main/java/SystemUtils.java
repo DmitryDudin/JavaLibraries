@@ -1,3 +1,5 @@
+import org.apache.commons.collections.MapUtils;
+
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Properties;
@@ -23,5 +25,9 @@ public class SystemUtils {
     public void printCurrentProjectClassPath2() {
         String cp = System.getProperty("java.class.path");
         System.out.println("cp - " + cp);
+    }
+
+    public void prettyPrintEnvironmentVariables() {
+        MapUtils.debugPrint(System.out, "System environment", System.getenv());
     }
 }
