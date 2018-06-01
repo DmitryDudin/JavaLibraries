@@ -25,6 +25,7 @@ gen
 /Logging/Log4j1/logFileFolder/
 /Logging/LogBack/logs/
 gradle-wrapper.properties
+/GoogleSpeechAPI/filesExclude/
 
 *.wav
 *.3gp
