@@ -17,6 +17,10 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    maven {
+//        url = 'https://github.com/subtlelib/poi.git'
+        url "https://jitpack.io"
+    }
 }
 
 ext {
@@ -40,11 +44,30 @@ dependencies {
     annotationProcessor "org.projectlombok:lombok:+"
     testAnnotationProcessor "org.projectlombok:lombok:+"
     testCompileOnly "org.projectlombok:lombok:+"
-//    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+
+    //dataFactory
+    compile group: 'org.fluttercode.datafactory', name: 'datafactory', version: '0.8'
 
     //apach poi
     compile "org.apache.poi:poi:${apachepoiVersion}"
     compile "org.apache.poi:poi-ooxml:${apachepoiVersion}"
+
+    //jxls
+    compile group: 'org.jxls', name: 'jxls', version: '2.4.5'
+    compile group: 'org.jxls', name: 'jxls-poi', version: '1.0.15'
+    compile group: 'org.jxls', name: 'jxls-jexcel', version: '1.0.7'
+
+    // excelUtil from com.sargeraswang
+    compile group: 'com.sargeraswang.util', name: 'excel-util', version: '1.2.1'
+
+    //subtlelib poi
+//    compile group: 'org.subtlelib', name: 'poi.builder', version: '1.0.4'
+//    compile 'org.subtlelib:poi.builder:+'
+//    compile 'com.github.Username:Reponame:Tag
+//    compile 'com.github.subtlelib:poi:Tag
+    implementation 'com.github.subtlelib:poi:master-SNAPSHOT'
+//    https://github.com/subtlelib/poi.git
 
 }
 
