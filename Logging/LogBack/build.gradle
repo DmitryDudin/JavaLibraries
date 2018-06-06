@@ -1,3 +1,5 @@
+import org.gradle.api.tasks.wrapper.Wrapper
+
 group 'ua.org.javatraining'
 version '1.0-SNAPSHOT'
 
@@ -54,3 +56,10 @@ jar {
         }
     }
 }*/
+
+task wrapper(type: Wrapper) {
+    description = 'Generates gradlew[.bat] scripts'
+    gradleVersion = '4.6'
+//    distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
+    distributionType = 'ALL'
+}

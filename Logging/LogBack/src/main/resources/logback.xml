@@ -12,7 +12,8 @@
     <!--************************************************************************************-->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>[%d{ISO8601}][%-5level][%-6.6thread][%logger{36}] - %msg%n</pattern>
+            <!--<pattern>[%d{ISO8601}][%-5level][%-6.6thread][%logger{36}] - %msg%n</pattern>-->
+            <Pattern>%d %-5level [%thread] [%X{rid}] %logger{0}: %msg%n</Pattern>
         </encoder>
         <!--<layout></layout>-->
     </appender>
@@ -25,7 +26,7 @@
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
             <fileNamePattern>
-                <!--logs/archive/rootErrorFiles/rootErrorFile-%d{yyyy-MM-dd_H-mm}.%i.log.gz-->
+                <!--logs/archive/rootErrorFiles/rootErrorFile-%d{yyyy-MM-dd_H-mm}.%i.log.gz--> <!--not working-->
                 logs/archive/rootErrorFiles/rootErrorFile.%i.log.gz
             </fileNamePattern>
             <maxIndex>5</maxIndex>
@@ -51,8 +52,10 @@
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>
+                <!--может содержать несколько %d, но только один является первичным - который указывает время опрокидывания,
+                все остальные вспомогоательные должны содержать aux параметр-->
                 logs/archive/rootFiles/%d{yyyy-MM-dd_HH-mm}/rootFile-%d{yyyy-MM-dd_H-mm, aux}.log.gz
-            </fileNamePattern>  <!--without aux - rollover time period-->
+            </fileNamePattern>  <!--without aux - rollover time period(указывает период опрокидывания)-->
             <maxHistory>5</maxHistory>
             <totalSizeCap>3GB</totalSizeCap>  <!--max summary size of log archives-->
         </rollingPolicy>
