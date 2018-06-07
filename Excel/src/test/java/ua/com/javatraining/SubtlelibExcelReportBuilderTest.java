@@ -1,23 +1,32 @@
 package ua.com.javatraining;
 
+import com.google.common.collect.Lists;
 import common.Payment;
 import examples.simple.SimpleReportModel;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.junit.Test;
 import org.subtlelib.poi.api.sheet.SheetContext;
 import org.subtlelib.poi.api.style.Style;
+import org.subtlelib.poi.api.style.StyleConfiguration;
 import org.subtlelib.poi.api.totals.ColumnTotalsDataRange;
 import org.subtlelib.poi.api.totals.Formula;
 import org.subtlelib.poi.api.workbook.WorkbookContext;
+import org.subtlelib.poi.impl.style.CompositeStyle;
+import org.subtlelib.poi.impl.style.defaults.DataStyle;
+import org.subtlelib.poi.impl.style.defaults.FontStyle;
+import org.subtlelib.poi.impl.style.system.SystemCellWrapTextStyle;
 import org.subtlelib.poi.impl.workbook.WorkbookContextFactory;
+import ua.com.javatraining.myUtils.ExcelUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Collection;
+import java.util.stream.IntStream;
+
+import static org.subtlelib.poi.impl.style.defaults.CellStyle.*;
 
 public class SubtlelibExcelReportBuilderTest {
 
@@ -30,12 +39,14 @@ public class SubtlelibExcelReportBuilderTest {
 
     public class SimpleReportView {
         private final WorkbookContextFactory ctxFactory;
+        private Collection<Payment> payments;
 
         public SimpleReportView(WorkbookContextFactory ctxFactory) {
             this.ctxFactory = ctxFactory;
         }
 
         public WorkbookContext render(Collection<Payment> payments) {
+            this.payments = payments;
 
             WorkbookContext workbookCtx = ctxFactory.createWorkbook();
             SheetContext sheetCtx = workbookCtx.createSheet("Payments");
@@ -45,8 +56,9 @@ public class SubtlelibExcelReportBuilderTest {
                     .nextRow()
                     .skipCell()
                     .header("Amount")
-                    .header("Currency")
-                    .header("Beneficiary").setColumnWidth(25).setHeaderStyle(org.subtlelib.poi.impl.style.defaults.CellStyle.BORDERS_THIN_ALL)
+                    .setHeaderStyle(new CompositeStyle(Lists.newArrayList(FontStyle.SECONDARY_HEADER, BORDERS_THIN_ALL, BORDERS_BOTTOM_DOUBLE)))
+                    .header("Currency").setColumnWidth(25).setRowHeight(30)
+                    .header("Beneficiary").setColumnWidth(25).setHeaderStyle(BORDERS_THIN_ALL)
                     .header("Payee bank").setColumnWidth(35);
 
             ColumnTotalsDataRange totalsData = sheetCtx.startColumnTotalsDataRangeFromNextRow();
