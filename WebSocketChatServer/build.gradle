@@ -12,10 +12,10 @@ repositories {
 ext {
     tomcatVersion = '9.0.1'
     logbackVersion = '1.2.3'
-    junitVersion = "4.12"
+    junitVersion = '4.12'
 }
 dependencies {
-    testCompile(group: 'junit', name: 'junit', version: '${junitVersion}') {
+    testCompile("junit:junit:${junitVersion}") {
         exclude module: 'hamcrest-core'
     }
     testCompile(group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3')

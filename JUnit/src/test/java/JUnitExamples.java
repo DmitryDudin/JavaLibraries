@@ -2,7 +2,7 @@ import org.junit.*;
 
 public class JUnitExamples {
     @BeforeClass
-    public void beforeClass() {
+    public static void beforeClass() {
 
     }
 
@@ -22,7 +22,7 @@ public class JUnitExamples {
     }
 
     @AfterClass
-    public void afterClass(){
+    public static void afterClass(){
 
     }
 //      https://github.com/junit-team/junit4/wiki/matchers-and-assertthat
