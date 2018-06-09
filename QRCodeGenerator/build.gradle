@@ -23,3 +23,11 @@ dependencies {
     compile group: 'com.google.zxing', name: 'core', version: '3.3.0'
 
 }
+
+
+task wrapper(type: Wrapper) {
+    description = 'Generates gradlew[.bat] scripts'
+    gradleVersion = '4.6'
+//    distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
+    distributionType = 'ALL'
+}
