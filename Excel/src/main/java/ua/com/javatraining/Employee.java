@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 @Getter
@@ -33,8 +34,9 @@ public class Employee {
         int seed = 1234567890;
         df.randomize(seed);
 
-        Stream.iterate(0, i -> i + 1)
-                .limit(limit)
+//        Stream.iterate(0, i -> i + 1)
+//                .limit(limit)
+        IntStream.range(0, limit)
                 .forEach(i -> {
                     result.add(Employee.builder()
                             .name(df.getName())
