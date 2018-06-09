@@ -45,7 +45,7 @@ public class SubtlelibExcelReportBuilderTest {
                     .nextRow()
                     .skipCell()
                     .header("Amount")
-                    .header("Currency")
+                    .header("Currency").setHeaderStyle(org.subtlelib.poi.impl.style.defaults.CellStyle.BORDERS_THIN_ALL)
                     .header("Beneficiary").setColumnWidth(25).setHeaderStyle(org.subtlelib.poi.impl.style.defaults.CellStyle.BORDERS_THIN_ALL)
                     .header("Payee bank").setColumnWidth(35);
 
