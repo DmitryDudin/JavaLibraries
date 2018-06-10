@@ -1,30 +1,14 @@
-import lombok.extern.slf4j.Slf4j;
-import org.junit.Test;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
-@Slf4j
-public class SimpleScheduler {
-    // http://www.quartz-scheduler.org/
-    // http://www.quartz-scheduler.org/documentation/quartz-2.x/tutorials/tutorial-lesson-06.html
+public class Simple {
 
-
-    @Test
-    public void test() throws SchedulerException {
+    public static void main(String[] args) throws SchedulerException, InterruptedException {
         // Grab the Scheduler instance from the Factory
         Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
 
         // and start it off
         scheduler.start();
-    }
-
-    @Test
-    public void test2() throws SchedulerException, InterruptedException {
-        // Grab the Scheduler instance from the Factory
-        Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-
-        // and start it off
-//        scheduler.start();
 
         // define the job and tie it to our MyJob class
         JobDetail job = JobBuilder.newJob(MyJob.class)
@@ -43,8 +27,7 @@ public class SimpleScheduler {
         // Tell quartz to schedule the job using our trigger
         scheduler.scheduleJob(job, trigger);
         Thread.sleep(10 * 1000);
-//        Thread.sleep(10 * 1000);
-
+        scheduler.deleteJob(job.getKey());
+        scheduler.shutdown(true);
     }
 }
-
