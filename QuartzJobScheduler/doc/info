@@ -1,0 +1,27 @@
+The key interfaces of the API are:
+    - Scheduler – the primary API for interacting with the scheduler of the framework
+    - Job – an interface to be implemented by components that we wish to have executed
+    - JobDetail – used to define instances of Jobs
+    - Trigger – a component that determines the schedule upon which a given Job will be performed
+    - JobBuilder – used to build JobDetail instances, which define instances of Jobs
+    - TriggerBuilder – used to build Trigger instances
+
+    - JobDataMap - is used to hold any amount of data objects that we wish to make available to the job instance when it executes.
+
+
+Триггер может не сработать в заданное время если планировщик был выключен или не было свободных потоков, тогда
+изпользуют Misfire instructions:
+-  By default, they use a smart policy - когда запускается scheduler он смотрит триггеры которые не сработали, после чего он обрабатывает каждый из них в
+  соответствии с  configured misfire instructions.
+    Trigger misFiredTriggerB = TriggerBuilder.newTrigger()
+      .startAt(DateUtils.addSeconds(new Date(), -10))
+      .withSchedule(SimpleScheduleBuilder.simpleSchedule()
+        .withMisfireHandlingInstructionFireNow())  - !!!!!!!!!!
+      .build();
+
+Triggers:
+1. SimpleTrigger - is used for scenarios in which we need to execute a job at a specific moment in time.
+   This can either be exactly once or repeatedly at specific intervals.
+2. CronTrigger - is used when we need schedules based on calendar-like statements. For example,
+   we can specify firing-schedules such as every Friday at noon or every weekday at 9:30 am.
+   https://docs.oracle.com/cd/E12058_01/doc/doc.1014/e12030/cron_expressions.htm  - cron description
