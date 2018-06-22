@@ -1,0 +1,70 @@
+
+---
+StAX:
+    https://habr.com/post/339716/
+
+---
+Handle the Middle of a XML Document with JAXB and StAX:
+    http://blog.bdoughan.com/2012/08/handle-middle-of-xml-document-with-jaxb.html
+
+---------------------------------------------------------------------------------------------------------------
+JAXB:
+    @XmlAttribute
+    @XmlValue
+
+    @XmlElement(name = "book")
+    private List<Book> books = new ArrayList<Book>();
+
+     @XmlElement(name = "publish_date")
+     @XmlJavaTypeAdapter(LocalDateAdapter.class)
+     private LocalDate pubdate;
+
+---
+Annotation Type XmlAnyElement:
+    https://docs.oracle.com/javaee/5/api/javax/xml/bind/annotation/XmlAnyElement.html
+---------------------------------------------------------------------------------------------------------------
+Jackson:
+    https://stackify.com/java-xml-jackson/
+    https://github.com/FasterXML/jackson-dataformat-xml/wiki/Jackson-XML-annotations
+
+     @JacksonXmlProperty(isAttribute = true)
+     private String ns = "yyy";
+     @JacksonXmlText
+     private String value;
+
+     <Root>
+         <Element1 ns="xxx">
+             <Element2 ns="yyy">A String</Element2>
+         </Element1>
+     </Root>
+---
+Чередующиеся элементы (interleaved elements):
+        1. failed to deserialize all interleaved elements for list:
+                https://github.com/FasterXML/jackson-dataformat-xml/issues/165
+
+        2.  <actions>
+                <stop></stop>
+                <travel></travel>
+                <stop></stop>
+                <travel></travel>
+                <stop></stop>
+                <travel></travel>
+            </actions>
+
+               @JacksonXmlProperty(localName = "stop")
+               @JacksonXmlElementWrapper(useWrapping = false)
+               @JsonMerge
+               private List<Stop> stops;
+
+               @JacksonXmlProperty(localName = "travel")
+               @JacksonXmlElementWrapper(useWrapping = false)
+               @JsonMerge
+               private List<Travel> travelList;
+
+        3.child elements having various names:  https://github.com/FasterXML/jackson-module-jaxb-annotations/issues/34
+---
+---------------------------------------------------------------------------------------------------------------
+SAX:
+
+---
+---------------------------------------------------------------------------------------------------------------
