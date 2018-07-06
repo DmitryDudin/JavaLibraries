@@ -24,6 +24,7 @@ Annotation Type XmlAnyElement:
     https://docs.oracle.com/javaee/5/api/javax/xml/bind/annotation/XmlAnyElement.html
 ---------------------------------------------------------------------------------------------------------------
 Jackson:
+Solving the XML Problem with Jackson:
     https://stackify.com/java-xml-jackson/
     https://github.com/FasterXML/jackson-dataformat-xml/wiki/Jackson-XML-annotations
 
