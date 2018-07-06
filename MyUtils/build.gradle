@@ -16,4 +16,5 @@ dependencies {
 
     compile group: 'commons-collections', name: 'commons-collections', version: '3.2.2'
 
+    compile group: 'com.joestelmach', name: 'natty', version: '0.13'
 }
