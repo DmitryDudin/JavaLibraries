@@ -69,6 +69,10 @@ dependencies {
     implementation 'com.github.subtlelib:poi:master-SNAPSHOT'
 //    https://github.com/subtlelib/poi.git
 
+//parser
+    compile group: 'org.javafunk', name: 'excel-parser', version: '1.0.1'
+
+
 }
 
 
