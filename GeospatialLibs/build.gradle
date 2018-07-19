@@ -44,6 +44,9 @@ dependencies {
     //utils
     compile group: 'com.google.guava', name: 'guava', version: '25.1-jre'
 
+    //geo
+    compile group: 'org.locationtech.spatial4j', name: 'spatial4j', version: '0.7'
+
 }
 
 task wrapper(type: Wrapper) {

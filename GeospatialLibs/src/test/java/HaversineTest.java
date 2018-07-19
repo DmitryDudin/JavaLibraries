@@ -18,6 +18,7 @@ public class HaversineTest {
     @Test
     public void simpleCalc() {
         //google = 44m
+        //haversine =43.7m
 //point1
         double lat1 = 50.55735;
         double lng1 = 30.30445;
