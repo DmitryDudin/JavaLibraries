@@ -2,6 +2,7 @@ import net.bramp.ffmpeg.FFmpeg;
 import net.bramp.ffmpeg.FFmpegExecutor;
 import net.bramp.ffmpeg.FFprobe;
 import net.bramp.ffmpeg.builder.FFmpegBuilder;
+import net.bramp.ffmpeg.probe.FFmpegProbeResult;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -16,15 +17,24 @@ public class BrampFfmpegLibraryTest {
 // /usr/share/ffmpeg
 // /usr/share/man/man1/ffmpeg.1.gz
 
-        FFmpeg ffmpeg = new FFmpeg("/usr/bin/ffmpeg");
-        Path outputPath = Paths.get("src/test/resources/result.flac");
+// /usr/bin/ffprobe
+// /usr/share/man/man1/ffprobe.1.gz
 
-        Path inputPath = Paths.get("src/test/resources/Видео для проекта по автоматизации оценки.mp4");
+        FFmpeg ffmpeg = new FFmpeg("/usr/bin/ffmpeg");
+        FFprobe ffprobe = new FFprobe("/usr/bin/ffprobe");
+
+        Path audioPath = Paths.get("src/test/resources/result.flac");
+        Path videoPath = Paths.get("src/test/resources/Видео для проекта по автоматизации оценки.mp4");
+
+        System.out.println("isFFprobe=" + ffprobe.isFFprobe());
+        FFmpegProbeResult ffmpegProbeResult = ffprobe.probe(videoPath.toAbsolutePath().toString());
+        System.out.println("duration= " + ffmpegProbeResult.getFormat().duration);
+
         ffmpeg.run(new FFmpegBuilder()
 //                .setInput("/home/dmitrid/dev/archieve/JavaLibraries/VideoAudioEncoding/src/test/resources/Видео для проекта по автоматизации оценки.mp4")
 //                .addOutput("/home/dmitrid/dev/archieve/JavaLibraries/VideoAudioEncoding/src/test/resources/result.flac")
-                        .setInput(inputPath.toAbsolutePath().toString())
-                        .addOutput(outputPath.toAbsolutePath().toString())
+                        .setInput(videoPath.toAbsolutePath().toString())
+                        .addOutput(audioPath.toAbsolutePath().toString())
                         .setFormat("flac")
                         .setAudioChannels(1)
                         .setAudioCodec("flac")
