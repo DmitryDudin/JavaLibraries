@@ -27,7 +27,7 @@ ext {
     logbackCoreVersion = '1.2.3'
     logbackClassicVersion = '1.2.3'
     lombokVersion = '1.18.0'
-    apachepoiVersion = '3.17'
+    apachepoiVersion = '4.0.0'
 
 }
 
@@ -52,6 +52,8 @@ dependencies {
     //apach poi
     compile "org.apache.poi:poi:${apachepoiVersion}"
     compile "org.apache.poi:poi-ooxml:${apachepoiVersion}"
+    compile group: 'org.apache.poi', name: 'ooxml-schemas', version: '1.4'
+    compile group: 'org.apache.poi', name: 'poi-examples', version: '4.0.0'
 
     //jxls
     compile group: 'org.jxls', name: 'jxls', version: '2.4.5'
