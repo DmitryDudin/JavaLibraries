@@ -1,4 +1,4 @@
-package ua.com.javatraining.jackson;
+package ua.com.javatraining.jaxb;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.annotation.*;
