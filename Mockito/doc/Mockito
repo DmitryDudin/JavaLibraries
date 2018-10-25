@@ -1,0 +1,8 @@
+
+When Mockito creates a mock – it does so from the Class of an Type, not from an actual instance.
+The mock simply creates a bare-bones shell instance of the Class, entirely instrumented to track
+interactions with it.
+
+On the other hand, the spy will wrap an existing instance. It will still behave in the same way as
+the normal instance – the only difference is that it will also be instrumented to track all the
+interactions with it.

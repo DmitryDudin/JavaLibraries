@@ -1,4 +1,4 @@
-package ua.com.javatraining;
+package ua.com.javatraining.mock;
 
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
