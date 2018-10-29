@@ -1,0 +1,59 @@
+
+JacksonPolymorphicDeserialization
+    https://github.com/FasterXML/jackson-docs/wiki/JacksonPolymorphicDeserialization
+    https://stackoverflow.com/questions/15945404/jackson-polymorphic-deserialization-based-on-enum
+    https://stackoverflow.com/questions/44634952/jackson-polymorphic-deserialization-using-annotations
+    https://stackoverflow.com/questions/41290311/spring-rest-json-serialization-deserialization-of-composite-polymorphic-types
+    https://github.com/mariuszluciow/spring-jackson-polymorphic
+
+Handling polymorphism with Jackson:
+    http://federico.defaveri.org/2016/11/20/handling-polymorphism-with-jackson/
+
+christophercurrie/Polymorph.java:
+    https://gist.github.com/christophercurrie/8939489
+
+Inheritance with Jackson:
+    https://www.baeldung.com/jackson-inheritance  !!!
+
+Jackson Annotation Examples:
+    https://www.baeldung.com/jackson-annotations
+---------------------------------------------------------------------------------------------------------------
+JacksonPolymorphicDeserialization
+
+two complementary ways to resolve this problem:
+    1. Global default typing
+        - Global default typing
+            - It is also possible to customize global defaulting, using ObjectMapper.setDefaultTyping(...)
+            - Security Risks using Global default typing
+    2. Per-class annotations (explicit annotations)
+        - use the @JsonTypeInfo annotation
+
+---
+Instance Type Information (Type Metadata):
+    - Directly include Java class name as instance information (possibly either as fully-qualified name,
+      or just relative name to minimize size). This is approach taken by package such as XStream
+    - Include a type identifier that can be used to determine actual class: this is often done by using
+      an external type definition (Schema). This is approach taken by frameworks like JAXB.
+    - Use some other custom type inclusion methods: type information might not necessarily limited
+      to String values.
+---
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.WRAPPER_OBJECT) =>  dogJson= {"ua.com.javatraining.jackson.jacksonPolymorphicDeserialization.Dog":{"name":"ruffus","barkVolume":12.0}}
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY)       =>  dogJson= {"@class":"ua.com.javatraining.jackson.jacksonPolymorphicDeserialization.Dog","name":"ruffus","barkVolume":12.0}
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.WRAPPER_ARRAY)  =>  dogJson= ["ua.com.javatraining.jackson.jacksonPolymorphicDeserialization.Dog",{"name":"ruffus","barkVolume":12.0}]
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.MINIMAL_CLASS, include = JsonTypeInfo.As.WRAPPER_OBJECT) =>  dogJson= {".Dog":{"name":"ruffus","barkVolume":12.0}}
+@JsonTypeInfo(use = JsonTypeInfo.Id.MINIMAL_CLASS, include = JsonTypeInfo.As.PROPERTY)       =>  dogJson= {"@c":".Dog","name":"ruffus","barkVolume":12.0}
+@JsonTypeInfo(use = JsonTypeInfo.Id.MINIMAL_CLASS, include = JsonTypeInfo.As.WRAPPER_ARRAY)  =>  dogJson= [".Dog",{"name":"ruffus","barkVolume":12.0}]
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)  =>  dogJson= {"Dog":{"name":"ruffus","barkVolume":12.0}}
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)        =>  dogJson= {"@type":"Dog","name":"ruffus","barkVolume":12.0}  - !!!!!!!!!!!!!!!!!!!!!!!
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_ARRAY)   =>  dogJson= ["Dog",{"name":"ruffus","barkVolume":12.0}]
+
+---
+
+---------------------------------------------------------------------------------------------------------------
+Mix-ins
+    Mix-ins allow us to apply behavior (such as ignoring properties when serializing and deserializing)
+    without the need to directly apply annotations to a class.
+---------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------

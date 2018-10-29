@@ -1,3 +1,5 @@
+package ua.com.javatraining;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 

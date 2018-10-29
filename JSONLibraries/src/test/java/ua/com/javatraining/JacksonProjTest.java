@@ -1,5 +1,7 @@
-import entity.Student;
-import org.hamcrest.Matcher;
+package ua.com.javatraining;
+
+import ua.com.javatraining.JacksonProj;
+import ua.com.javatraining.entity.Student;
 import org.junit.Assert;
 import org.junit.Test;
 
