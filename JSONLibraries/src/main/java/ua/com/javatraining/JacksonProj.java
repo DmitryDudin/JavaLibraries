@@ -1,9 +1,9 @@
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonParser;
+package ua.com.javatraining;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import entity.Student;
+import ua.com.javatraining.entity.Student;
 import org.json.JSONException;
 
 import java.io.IOException;

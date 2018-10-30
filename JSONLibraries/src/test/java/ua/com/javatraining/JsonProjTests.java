@@ -1,4 +1,7 @@
+package ua.com.javatraining;
+
 import org.junit.Test;
+import ua.com.javatraining.JsonProj;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

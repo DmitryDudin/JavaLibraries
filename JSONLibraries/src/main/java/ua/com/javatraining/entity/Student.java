@@ -1,4 +1,4 @@
-package entity;
+package ua.com.javatraining.entity;
 
 public class Student {
     private String name;
