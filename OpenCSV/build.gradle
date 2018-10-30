@@ -1,3 +1,5 @@
+import org.gradle.api.tasks.wrapper.Wrapper
+
 group 'ua.org.javatraining'
 version '1.0-SNAPSHOT'
 
@@ -17,5 +19,11 @@ dependencies {
 
     compile (group: 'com.opencsv', name: 'opencsv', version: '3.10')
 
+}
+
+task wrapper(type: Wrapper) {
+    description = 'Generates gradlew[.bat] scripts'
+    gradleVersion = '4.6'
+    distributionType = 'ALL'
 }
 
