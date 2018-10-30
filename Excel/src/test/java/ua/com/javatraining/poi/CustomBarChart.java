@@ -74,10 +74,10 @@ public class CustomBarChart {
 //            leftAxis.setMinorUnit(2d);
 //            bottomAxis.setMinorUnit(2d);
             System.out.println(bottomAxis.getMinorUnit());
-            leftAxis.setMaximum(50d);
+            leftAxis.setMaximum(50d);//working
             bottomAxis.setMaximum(20d);
             System.out.println(bottomAxis.getMaximum());
-//            leftAxis.setMinimum(-100d);
+//            leftAxis.setMinimum(-100d);//working
 //            bottomAxis.setMinimum(-5d);
             System.out.println(bottomAxis.getMinimum());
 //            leftAxis.setMajorTickMark(AxisTickMark.CROSS);
@@ -90,12 +90,9 @@ public class CustomBarChart {
 //            leftAxis.setCrosses(AxisCrosses.MAX);
 //            bottomAxis.setCrosses(AxisCrosses.MAX);
 
-            CTChart ctChart = xddfChart.getCTChart();
-//            ctChart.
-
             //data
 //            lastRow - numOfPoints
-//            String dataRange = xddfChart.formatRange(new CellRangeAddress(1, 10, 0, 0));
+//            String dataRange1 = xddfChart.formatRange(new CellRangeAddress(1, 10, 0, 0));//<- is equals to Sheet0!$A$2:$A$11
 //            Sheet0!$A$2:$J$2
             String dataRange = xddfChart.formatRange(new CellRangeAddress(1, 1, 0, NUM_OF_COLUMNS - 1));
             XDDFNumericalDataSource<Integer> arrayDataSource = XDDFDataSourcesFactory
@@ -107,15 +104,14 @@ public class CustomBarChart {
                     .fromNumericCellRange(sheet, new CellRangeAddress(0, 0, 0, NUM_OF_COLUMNS - 1));
             XDDFNumericalDataSource<Double> ys1 = XDDFDataSourcesFactory
                     .fromNumericCellRange(sheet, new CellRangeAddress(1, 1, 0, NUM_OF_COLUMNS - 1));
-//            XDDFNumericalDataSource<Double> ys2 = XDDFDataSourcesFactory
-//                    .fromNumericCellRange(sheet, new CellRangeAddress(2, 2, 0, NUM_OF_COLUMNS - 1));
+            XDDFNumericalDataSource<Double> ys2 = XDDFDataSourcesFactory
+                    .fromNumericCellRange(sheet, new CellRangeAddress(2, 2, 0, NUM_OF_COLUMNS - 1));
 
-            //todo ???
 //            XDDFChartData data = xddfChart.createData(ChartTypes.BAR, bottomAxis, leftAxis);
             XDDFBarChartData data = (XDDFBarChartData) xddfChart.createData(ChartTypes.BAR, bottomAxis, leftAxis);
             data.addSeries(xs, arrayDataSource);
             data.addSeries(xs, ys1);
-//            data.addSeries(xs, ys2);
+            data.addSeries(xs, ys2);
             xddfChart.plot(data);
 
             /*data.chart.setBarDir(CTBarDir.Factory.newInstance());
@@ -125,7 +121,7 @@ public class CustomBarChart {
             //data color
             setGreenFillProperties(0, data, getAquaFillProperties());
             setGreenFillProperties(1, data, getGreenFillProperties());
-//            setGreenFillProperties(2, data, getYellowFillProperties());
+            setGreenFillProperties(2, data, getYellowFillProperties());
 
             // Write the output to a file
             try (FileOutputStream fileOut = new FileOutputStream("CustomBarChart.xlsx")) {

@@ -23,6 +23,9 @@ public class SimpleBarChart {
 //    BarChart  -  https://svn.apache.org/repos/asf/poi/trunk/src/examples/src/org/apache/poi/xssf/usermodel/examples/BarChart.java
 // !!!chhunchha/Excel-Chart-Using-Java  createChart  ->  https://github.com/chhunchha/Excel-Chart-Using-Java/blob/master/src/com/programmingfree/excelexamples/CreateExcelFile.java
 
+    /*How to add Data Label for a Bar chart in PPT using POI and org.openxmlformats in Java
+    https://stackoverflow.com/questions/47218804/how-to-add-data-label-for-a-bar-chart-in-ppt-using-poi-and-org-openxmlformats-in*/
+
     @Test
     public void name() throws IOException {
         try (XSSFWorkbook wb = new XSSFWorkbook()) {

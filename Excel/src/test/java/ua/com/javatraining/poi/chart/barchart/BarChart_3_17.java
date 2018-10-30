@@ -59,6 +59,10 @@ public class BarChart_3_17 {
         }
 
         XSSFDrawing drawing = sheet.createDrawingPatriarch();
+//		col1 - the column (0 based) of the first cell.
+//		row1 - the row (0 based) of the first cell.
+//		col2 - the column (0 based) of the second cell.
+//		row2 - the row (0 based) of the second cell.
         ClientAnchor anchor = drawing.createAnchor(0, 0, 0, 0, 0, 5, 8, 20);
 
         Chart chart = drawing.createChart(anchor);
@@ -72,16 +76,26 @@ public class BarChart_3_17 {
 
         for (int r = 2; r < 6; r++) {
             CTBarSer ctBarSer = ctBarChart.addNewSer();
+
             CTSerTx ctSerTx = ctBarSer.addNewTx();
+
             CTStrRef ctStrRef = ctSerTx.addNewStrRef();
-            ctStrRef.setF("Sheet1!$A$" + r);
+//            ctStrRef.setF("Sheet1!$A$" + r);//Serie 1, Serie 2, Serie 3, Serie 4
+//            ctStrRef.setF("Sheet1!$A$"+r);
+
             ctBarSer.addNewIdx().setVal(r - 2);
+
             CTAxDataSource cttAxDataSource = ctBarSer.addNewCat();
             ctStrRef = cttAxDataSource.addNewStrRef();
-            ctStrRef.setF("Sheet1!$B$1:$D$1");
+//            ctStrRef.setF("Sheet1!$B$1:$D$1");//HEADER 1	HEADER 2	HEADER 3
+//            ctStrRef.setF("Sheet1!$B$1");
+//            ctStrRef.setF("Sheet1!$A$2:$A$5");
+            ctStrRef.setF("Sheet1!$A$"+r);
+
             CTNumDataSource ctNumDataSource = ctBarSer.addNewVal();
             CTNumRef ctNumRef = ctNumDataSource.addNewNumRef();
-            ctNumRef.setF("Sheet1!$B$" + r + ":$D$" + r);
+//            ctNumRef.setF("Sheet1!$B$" + r + ":$D$" + r);//values
+            ctNumRef.setF("Sheet1!$B$" + r);
 
             //at least the border lines in Libreoffice Calc ;-)
             ctBarSer.addNewSpPr().addNewLn().addNewSolidFill().addNewSrgbClr().setVal(new byte[]{0, 0, 0});
@@ -92,7 +106,7 @@ public class BarChart_3_17 {
         ctBarChart.addNewAxId().setVal(123456);
         ctBarChart.addNewAxId().setVal(123457);
 
-        //cat axis
+        //cat axis (category axis???)
         CTCatAx ctCatAx = ctPlotArea.addNewCatAx();
         ctCatAx.addNewAxId().setVal(123456); //id of the cat axis
         CTScaling ctScaling = ctCatAx.addNewScaling();
