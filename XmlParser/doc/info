@@ -7,6 +7,8 @@ StAX:
 Handle the Middle of a XML Document with JAXB and StAX:
     http://blog.bdoughan.com/2012/08/handle-middle-of-xml-document-with-jaxb.html
 
+Все XML-технологии за 5 минут. XML, XML-NS, Fast Infoset, XPATH, XSLT, XSD, DTD, XML schema, SOAP, WSDL, MTOM, SAAJ, DOM, SAX, STAX, JAXB, dom4J, jdom, xerces, xalan, xsteam, JAX-WS, JAX-RT, SOA, ESB.
+    http://www.duct-tape-architect.ru/?p=315#i
 ---------------------------------------------------------------------------------------------------------------
 JAXB:
     @XmlAttribute
