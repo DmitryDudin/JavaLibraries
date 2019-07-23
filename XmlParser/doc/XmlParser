@@ -27,6 +27,34 @@ JAXB:
 ---
 Annotation Type XmlAnyElement:
     https://docs.oracle.com/javaee/5/api/javax/xml/bind/annotation/XmlAnyElement.html
+---
+Example:
+
+   @XmlElement(name = "availability")
+    @XmlJavaTypeAdapter(JaxbBooleanAdapter.class)
+    private Boolean availability;
+
+    public class JaxbBooleanAdapter extends XmlAdapter<String, Boolean> {
+        @Override
+        public Boolean unmarshal(String v) throws Exception {
+            if ("True".equals(v)) {
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public String marshal(Boolean v) throws Exception {
+            if(v){
+                return "True";
+            }
+            else {
+                return "False";
+            }
+        }
+    }
+
+---
 ---------------------------------------------------------------------------------------------------------------
 Jackson:
 Solving the XML Problem with Jackson:

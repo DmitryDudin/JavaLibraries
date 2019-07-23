@@ -14,5 +14,9 @@ dependencies {
 
     compile "commons-io:commons-io:+"
 
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+    compile group: 'org.apache.commons', name: 'commons-text', version: '1.7'
+
+
 
 }
