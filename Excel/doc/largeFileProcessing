@@ -1,0 +1,36 @@
+
+------------------------------------------------------------------------------------------------------------------------
+Writing large Excel sheet using SXSSF POI
+    https://stackoverflow.com/questions/32717146/writing-large-excel-sheet-using-sxssf-poi
+
+Apache POI Streaming (SXSSF) for Reading
+    https://stackoverflow.com/questions/33786219/apache-poi-streaming-sxssf-for-reading
+
+POI-HSSF and POI-XSSF/SXSSF - Java API To Access Microsoft Excel Format Files
+    http://poi.apache.org/components/spreadsheet/
+
+Apache POI - HSSF and XSSF Limitations
+    http://poi.apache.org/components/spreadsheet/limitations.html
+
+Java heap space error, I can't process large xlsx file in java
+    https://stackoverflow.com/questions/44025844/java-heap-space-error-i-cant-process-large-xlsx-file-in-java
+
+java.lang.OutOfMemoryError: Java heap space for large excel file [duplicate]
+    https://stackoverflow.com/questions/47883448/java-lang-outofmemoryerror-java-heap-space-for-large-excel-file
+
+Adding a row to a large xlsx file (Out of Memory)
+    https://stackoverflow.com/questions/41620308/adding-a-row-to-a-large-xlsx-file-out-of-memory
+
+BigGridDemo
+    http://www.docjar.org/html/api/org/apache/poi/xssf/usermodel/examples/BigGridDemo.java.html
+
+org.apache.poi.xssf.usermodel.examples
+    http://www.docjar.org/docs/api/org/apache/poi/xssf/usermodel/examples/package-index.html
+
+Low memory writing/reading with Apache POI
+    https://stackoverflow.com/questions/19192651/low-memory-writing-reading-with-apache-poi
+
+How to load a large xlsx file with Apache POI?
+    https://stackoverflow.com/questions/11891851/how-to-load-a-large-xlsx-file-with-apache-poi
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------

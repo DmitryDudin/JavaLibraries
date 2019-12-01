@@ -1,0 +1,55 @@
+
+--------------------------------------------------------------------------------------------------------------
+Excel Column Width Unit Converter[pixels - excel column width units]
+    http://mail-archives.apache.org/mod_mbox/poi-user/200810.mbox/%3CBAY124-W1137A2B874ADEEBF932518BA310@phx.gbl%3E
+
+Setting Column width in Apache POI
+    https://stackoverflow.com/questions/11573993/setting-column-width-in-apache-poi
+
+POI's setColumnWidth — character width?
+    https://stackoverflow.com/questions/24313907/pois-setcolumnwidth-character-width
+--------------------------------------------------------------------------------------------------------------
+int width = columnByCharacters.get(headers[column]) * 297 + 276;// size symbol "0" = 297, padding=276
+--------------------------------------------------------------------------------------------------------------
+int width = columnByCharacters.get(headers[column]) * 256;//optimal !!!
+--------------------------------------------------------------------------------------------------------------
+if autoSizeColumn is to long
+where 1.14388 is a max character width of the "Serif" font and 256 font units.
+Performance of autosizing improved from 10 minutes to 6 seconds.
+maxNumCharacters - simply calculate number of characters in each cell of column and find the largest,
+than apply it in formula
+
+int width = ((int)(maxNumCharacters * 1.14388)) * 256;
+sheet.setColumnWidth(i, width);
+
+--------------------------------------------------------------------------------------------------------------
+
+int width = pixel2WidthUnits(columnByCharacters.get(headers[column]) * 8);
+
+---
+
+    public static final short EXCEL_COLUMN_WIDTH_FACTOR = 256;
+    public static final short EXCEL_ROW_HEIGHT_FACTOR = 20;
+    public static final int UNIT_OFFSET_LENGTH = 7;
+    public static final int[] UNIT_OFFSET_MAP = new int[]{0, 36, 73, 109, 146, 182, 219};
+
+    public static short pixel2WidthUnits(int pxs) {
+        short widthUnits = (short) (EXCEL_COLUMN_WIDTH_FACTOR * (pxs / UNIT_OFFSET_LENGTH));
+        widthUnits += UNIT_OFFSET_MAP[(pxs % UNIT_OFFSET_LENGTH)];
+        return widthUnits;
+    }
+
+    public static int widthUnits2Pixel(short widthUnits) {
+        int pixels = (widthUnits / EXCEL_COLUMN_WIDTH_FACTOR) * UNIT_OFFSET_LENGTH;
+        int offsetWidthUnits = widthUnits % EXCEL_COLUMN_WIDTH_FACTOR;
+        pixels += Math.floor((float) offsetWidthUnits / ((float) EXCEL_COLUMN_WIDTH_FACTOR / UNIT_OFFSET_LENGTH));
+        return pixels;
+    }
+
+    public static int heightUnits2Pixel(short heightUnits) {
+        int pixels = (heightUnits / EXCEL_ROW_HEIGHT_FACTOR);
+        int offsetWidthUnits = heightUnits % EXCEL_ROW_HEIGHT_FACTOR;
+        pixels += Math.floor((float) offsetWidthUnits / ((float) EXCEL_ROW_HEIGHT_FACTOR / UNIT_OFFSET_LENGTH));
+        return pixels;
+    }
+--------------------------------------------------------------------------------------------------------------

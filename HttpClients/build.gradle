@@ -1,6 +1,4 @@
-import org.gradle.api.tasks.wrapper.Wrapper
-
-group 'ua.org.javatraining'
+group 'ua.com.javatraining'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
@@ -11,19 +9,17 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    logbackCoreVersion = '1.2.3'
+    logbackClassicVersion = '1.2.3'
+}
+
 dependencies {
     testCompile(group: 'junit', name: 'junit', version: '4.12') {
         exclude module: 'hamcrest-core'
     }
     testCompile(group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3')
 
-    compile (group: 'com.opencsv', name: 'opencsv', version: '3.10')
-
+    compile "ch.qos.logback:logback-core:${logbackCoreVersion}"
+    compile "ch.qos.logback:logback-classic:${logbackClassicVersion}"
 }
-
-task wrapper(type: Wrapper) {
-    description = 'Generates gradlew[.bat] scripts'
-    gradleVersion = '4.6'
-    distributionType = 'ALL'
-}
-
