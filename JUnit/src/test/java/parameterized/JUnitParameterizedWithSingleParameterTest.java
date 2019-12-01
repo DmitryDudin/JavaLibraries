@@ -14,12 +14,12 @@ public class JUnitParameterizedWithSingleParameterTest {
 
     @Parameters
     public static Iterable<? extends Object> params() {
-        return Arrays.asList("first", "second", "third");
+        return Arrays.asList("sourceDest", "second", "third");
     }
     //pr
     /*@Parameters
     public static Object[] data() {
-        return new Object[] { "first test", "second test" };
+        return new Object[] { "sourceDest test", "second test" };
     }*/
 
     public JUnitParameterizedWithSingleParameterTest(String parameter) {

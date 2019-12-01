@@ -43,10 +43,10 @@ public class ExampleLongAudio {
 
 
             RecognizeResponse recognizeResponse = speech.recognize(recConfig, recognitionAudio);
-            // Just print the first result here.
+            // Just print the sourceDest result here.
             SpeechRecognitionResult result = recognizeResponse.getResultsList().get(0);
             // There can be several alternative transcripts for a given chunk of speech. Just use the
-            // first (most likely) one here.
+            // sourceDest (most likely) one here.
             SpeechRecognitionAlternative alternative = result.getAlternativesList().get(0);
             System.out.printf("Transcript : %s\n", alternative.getTranscript());
         }
@@ -80,7 +80,7 @@ public class ExampleLongAudio {
 
             for (SpeechRecognitionResult result : results) {
                 // There can be several alternative transcripts for a given chunk of speech. Just use the
-                // first (most likely) one here.
+                // sourceDest (most likely) one here.
                 SpeechRecognitionAlternative alternative = result.getAlternativesList().get(0);
                 System.out.printf("Transcription: %s\n", alternative.getTranscript());
             }

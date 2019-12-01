@@ -114,7 +114,7 @@ audio format != audio encoding
 
             for (SpeechRecognitionResult result : results) {//result corresponds to a segment of audio (segments of audio are separated by pauses)
                 // There can be several alternative transcripts for a given chunk of speech. Just use the
-                // first (most likely) one here.
+                // sourceDest (most likely) one here.
                 //alternatives contains a list of possible transcriptions, of type SpeechRecognitionAlternatives
                 for (SpeechRecognitionAlternative speechRecognitionAlternative : result.getAlternativesList()) {
                     System.out.printf("------------------------ Transcription: %s%n", speechRecognitionAlternative.getTranscript());

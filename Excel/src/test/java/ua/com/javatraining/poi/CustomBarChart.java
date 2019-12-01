@@ -44,8 +44,8 @@ public class CustomBarChart {
             XSSFDrawing drawing = sheet.createDrawingPatriarch();
 
             //anchor
-//		col1 - the column (0 based) of the first cell.
-//		row1 - the row (0 based) of the first cell.
+//		col1 - the column (0 based) of the sourceDest cell.
+//		row1 - the row (0 based) of the sourceDest cell.
 //		col2 - the column (0 based) of the second cell.
 //		row2 - the row (0 based) of the second cell.
             XSSFClientAnchor anchor = drawing.createAnchor(0, 0, 0, 0, 0, 5, 10, 15);

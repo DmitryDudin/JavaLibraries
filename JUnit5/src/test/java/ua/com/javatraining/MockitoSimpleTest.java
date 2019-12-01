@@ -18,7 +18,7 @@ public class MockitoSimpleTest {
 // stubbing appears before the actual execution
         when(mockedList.get(0)).thenReturn("abra abra");
 
-// the following prints "first"
+// the following prints "sourceDest"
         System.out.println("mockito get 0 - " + mockedList.get(0));
 
 // the following prints "null" because get(999) was not stubbed

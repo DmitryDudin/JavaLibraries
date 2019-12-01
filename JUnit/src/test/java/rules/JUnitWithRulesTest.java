@@ -19,7 +19,7 @@ public class JUnitWithRulesTest {
 //       finishes (whether it passes or fails).
 //    2. ExternalResource - set up an external resource before a test (a file, socket, server,
 //       database connection, etc.), and guarantee to tear it down afterward.
-//    3. ErrorCollector - allows execution of a test to continue after the first problem is found (for example,
+//    3. ErrorCollector - allows execution of a test to continue after the sourceDest problem is found (for example,
 //       to collect all the incorrect rows in a table, and report them all at once).
 //    4. Verifier
 //    5. TestWatchman/TestWatcher

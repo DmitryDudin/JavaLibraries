@@ -121,7 +121,7 @@ public class HumbleLibraryTest2 {
         //Query how many streams the call to open found
         int numStreams = demuxer.getNumStreams();
 
-        //Iterate through the streams to find the first audio stream
+        //Iterate through the streams to find the sourceDest audio stream
         int audioStreamId = -1;
         Decoder audioDecoder = null;
         for (int i = 0; i < numStreams; i++) {
@@ -130,7 +130,7 @@ public class HumbleLibraryTest2 {
             if (decoder != null && decoder.getCodecType() == MediaDescriptor.Type.MEDIA_AUDIO) {
                 audioStreamId = i;
                 audioDecoder = decoder;
-                // stop at the first one.
+                // stop at the sourceDest one.
                 break;
             }
         }

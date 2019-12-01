@@ -88,7 +88,7 @@ public class HumbleLibraryTest {
         return String.format("%1$02d:%2$02d:%3$02d.%4$02d", hours, mins, secs, subsecs);
     }
     /**
-     * Takes a media container (file) as the first argument, opens it,
+     * Takes a media container (file) as the sourceDest argument, opens it,
      * and tells you what's inside the container.
      *
      * @param args Must contain one string which represents a filename. If no arguments, then prints help.

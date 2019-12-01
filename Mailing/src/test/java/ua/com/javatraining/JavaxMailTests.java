@@ -63,7 +63,7 @@ public class JavaxMailTests {
             //add attachment
             Multipart multipart = new MimeMultipart();
             File file = new File("report.xlsx");
-            /*first variant
+            /*sourceDest variant
             BodyPart bodyPart = new MimeBodyPart();
             DataSource source = new FileDataSource(file);
             bodyPart.setDataHandler(new DataHandler(source));

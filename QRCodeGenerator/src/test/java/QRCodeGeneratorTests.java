@@ -16,7 +16,7 @@ public class QRCodeGeneratorTests {
 
         ByteArrayOutputStream stream = QRCode.from(data).to(ImageType.PNG).stream();
 
-//first variant with absolute path
+//sourceDest variant with absolute path
 //        URI uri = new URI("file:///home/dmitry/Documents/JavaLibraries/QRCodeGenerator/destinationFolder/forDelete.png");
 //        Path path = Paths.get(uri);
 //        Files.write(path, stream.toByteArray(), StandardOpenOption.CREATE);
