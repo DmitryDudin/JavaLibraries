@@ -1,0 +1,450 @@
+
+build.gradle:
+
+        // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-webflux
+        //    compile group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version: '2.1.5.RELEASE'
+            compile 'org.springframework.boot:spring-boot-starter-webflux'
+        // https://mvnrepository.com/artifact/org.projectreactor/reactor-spring
+            compile group: 'org.projectreactor', name: 'reactor-spring', version: '1.0.1.RELEASE'
+        // https://mvnrepository.com/artifact/io.netty/netty-tcnative
+            compile group: 'io.netty', name: 'netty-tcnative', version: '2.0.25.Final'
+            // https://mvnrepository.com/artifact/io.netty/netty-transport-native-epoll
+        //    compile group: 'io.netty', name: 'netty-transport-native-epoll', version: '4.1.36.Final', classifier:‘linux-x86_64’
+            compile (group: 'io.netty', name: 'netty-transport-native-epoll', version: '4.1.16.Final', classifier:'linux-x86_64')
+        //    compile (group: 'io.netty', name: 'netty-transport-native-epoll', version: '4.1.36.Final', classifier:${os.detected.name}-${os.detected.arch})
+        //    compile "io.netty:netty-transport-native-epoll:4.1.36.Final:linux-x86_64"
+        //    compile "io.netty:netty-transport-native-epoll:4.0.27.Final:linux-x86_64@"
+
+            // https://mvnrepository.com/artifact/commons-httpclient/commons-httpclient
+            compile group: 'commons-httpclient', name: 'commons-httpclient', version: '3.1'
+
+            // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
+            compile group: 'com.squareup.okhttp3', name: 'okhttp', version: '3.14.2'
+
+            // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
+            compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.9'
+        // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpmime
+            compile group: 'org.apache.httpcomponents', name: 'httpmime', version: '4.5.9'
+
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+
+package com.pmi.web.rest;
+
+import com.amazonaws.http.client.HttpClientFactory;
+import com.google.common.io.Files;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import okhttp3.Call;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okio.Buffer;
+import okio.BufferedSink;
+import okio.ForwardingSink;
+import okio.Okio;
+import okio.Sink;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.methods.FileRequestEntity;
+import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.methods.multipart.FilePart;
+import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
+import org.apache.commons.httpclient.methods.multipart.Part;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.FileEntity;
+import org.apache.http.entity.HttpEntityWrapper;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.client.ClientResponse;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
+
+import javax.annotation.Nullable;
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.FilterOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.concurrent.TimeUnit;
+
+import static org.junit.Assert.assertFalse;
+
+@Slf4j
+@RequiredArgsConstructor
+@RestController
+@RequestMapping("/api")
+public class TestControllerResource {
+
+    @GetMapping("/test_webclient")
+    public void getWebTestClient() throws IOException {
+
+//            File file = ResourceUtils.getFile("classpath:testFiles/125Mb_video.mp4");
+//            File file = new File("/home/dmitrid/dev/forDelete/ChunkedRequestProject/src/test/resources/testFiles/125Mb_video.mp4");
+        File file = new File("/home/dmitrid/dev/forDelete/ChunkedRequestProject/src/test/resources/testFiles/testVideo_57sec.mp4");
+        ByteArrayResource byteArrayResource = new ByteArrayResource(Files.toByteArray(file));
+
+
+        WebClient webClient = WebClient.builder()
+                .baseUrl("http://127.0.0.1:8080")
+                .build();
+
+        Mono<ClientResponse> chunked = webClient.post()
+                .uri("/api/speechRecords/video/test")
+                .header("Transfer-Encoding", "chunked")
+//                .header("x-auth-token", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvcGVyYXRvcjFAZ21haWwuY29tIiwiYXV0aCI6IlJPTEVfT1BFUkFUT1IiLCJleHAiOjE1MzYwNTE1NjF9.aXqStSSKu0MJQzDepbiRKOCh1hOAao_gkTy5_ZnDdd0F6SfbszoWWIIY7eD_J3mhUk8qColz5zx3gGlBAqR_qw")
+                .header("x-auth-token", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0U2FsZXNQZXJzb24xQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX1NBTEVTX1BFUlNPTiIsImV4cCI6MTYyMzgyMzk4MH0.RecndWb4GlAMJtp9jZeko6YDbVF6dqnh2UGa0w0SNrADWGkpG26WQLAZBfyCG6uXiRlZuSEjT3dcWx9XSX-lcQ")
+                .body(BodyInserters.fromResource(byteArrayResource))
+                .exchange();
+
+        WebTestClient.ResponseSpec exchange = WebTestClient
+                .bindToServer()
+//                .baseUrl("http://127.0.0.1:8080/api/speechRecords/video/test")
+                .build()
+                .post()
+                .uri("http://127.0.0.1:8080/api/speechRecords/video/test")
+                .header("Transfer-Encoding", "chunked")
+//                .header("x-auth-token", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvcGVyYXRvcjFAZ21haWwuY29tIiwiYXV0aCI6IlJPTEVfT1BFUkFUT1IiLCJleHAiOjE1MzYwNTE1NjF9.aXqStSSKu0MJQzDepbiRKOCh1hOAao_gkTy5_ZnDdd0F6SfbszoWWIIY7eD_J3mhUk8qColz5zx3gGlBAqR_qw")
+                .header("x-auth-token", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0U2FsZXNQZXJzb24xQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX1NBTEVTX1BFUlNPTiIsImV4cCI6MTYyMzgyMzk4MH0.RecndWb4GlAMJtp9jZeko6YDbVF6dqnh2UGa0w0SNrADWGkpG26WQLAZBfyCG6uXiRlZuSEjT3dcWx9XSX-lcQ")
+                .body(BodyInserters.fromResource(byteArrayResource))
+//                .body()
+//                .uri("/api/speechRecords/video/test")
+                .exchange();
+
+        int i = 0;
+    }
+
+    @GetMapping("/test_apacheclient")
+    public void getApacheHttp() throws IOException {
+        File file = new File("/home/dmitrid/dev/forDelete/ChunkedRequestProject/src/test/resources/testFiles/testVideo_57sec.mp4");
+
+        HttpClient client = new HttpClient();
+        PostMethod postMethod = new PostMethod("http://127.0.0.1:8080/api/speechRecords/video/test");
+        postMethod.setContentChunked(true);
+
+//            postMethod.setRequestHeader("x-auth-token", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvcGVyYXRvcjFAZ21haWwuY29tIiwiYXV0aCI6IlJPTEVfT1BFUkFUT1IiLCJleHAiOjE1MzYwNTE1NjF9.aXqStSSKu0MJQzDepbiRKOCh1hOAao_gkTy5_ZnDdd0F6SfbszoWWIIY7eD_J3mhUk8qColz5zx3gGlBAqR_qw");
+        postMethod.setRequestHeader("x-auth-token", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0U2FsZXNQZXJzb24xQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX1NBTEVTX1BFUlNPTiIsImV4cCI6MTYyMzgyMzk4MH0.RecndWb4GlAMJtp9jZeko6YDbVF6dqnh2UGa0w0SNrADWGkpG26WQLAZBfyCG6uXiRlZuSEjT3dcWx9XSX-lcQ");
+//            postMethod.setRequestHeader("Transfer-Encoding", "chunked");
+//            postMethod.setRequestHeader("transfer-encoding", "chunked");
+
+            /*Part[] parts = {
+                    new StringPart("param_name", "value"),
+                    new FilePart(file.getName(), file)
+            };
+
+            postMethod.setRequestEntity(new MultipartRequestEntity(parts, postMethod.getParams()));
+
+            int status = client.executeMethod(postMethod);
+            System.err.println("status= " + status);*/
+
+            /*FileInputStream inStream = new FileInputStream(file);
+            InputStreamRequestEntity inputStreamEntity = new InputStreamRequestEntity(inStream);
+            postMethod.setRequestEntity(inputStreamEntity);
+            int status2 = client.executeMethod(postMethod);
+            inStream.close();
+            System.err.println("status2= " + status2);*/
+
+        FileRequestEntity fileRequestEntity = new FileRequestEntity(file, "application/octet-stream");
+        postMethod.setRequestEntity(fileRequestEntity);
+        int status3 = client.executeMethod(postMethod);
+        System.err.println("status3= " + status3);
+    }
+
+    @GetMapping("/test_apacheclient_multipart")
+    public void getApacheHttpMultipart(HttpServletRequest httpServletRequest) throws IOException {
+        String xAuthToken = httpServletRequest.getHeader("x-auth-token");
+        File file = new File("/home/dmitrid/dev/forDelete/ChunkedRequestProject/src/test/resources/testFiles/testVideo_57sec.mp4");
+
+        HttpClient client = new HttpClient();
+        PostMethod postMethod = new PostMethod("http://127.0.0.1:8080/api/speechRecords/video/test");
+        postMethod.setContentChunked(true);
+
+        postMethod.setRequestHeader("x-auth-token", xAuthToken);
+        Part[] parts = {
+                new FilePart(file.getName(), file)
+        };
+        MultipartRequestEntity multipartRequestEntity = new MultipartRequestEntity(parts, postMethod.getParams());
+        postMethod.setRequestEntity(multipartRequestEntity);
+        int status = client.executeMethod(postMethod);
+        String responseStr = postMethod.getResponseBodyAsString();
+
+        System.err.println("status= " + status);
+        System.err.println("response body= " + responseStr);
+    }
+
+    @GetMapping("/test_apacheclient_multipart2")
+    public void getApacheHttpMultipart2(HttpServletRequest httpServletRequest) throws IOException {
+        String xAuthToken = httpServletRequest.getHeader("x-auth-token");
+//        File file = new File("/home/dmitrid/dev/forDelete/ChunkedRequestProject/src/test/resources/testFiles/testVideo_57sec.mp4");
+        File file = new File("/home/dmitrid/dev/forDelete/ChunkedRequestProject/src/test/resources/testFiles/testVideo_15Mb.mp4");
+//        File file = new File("/home/dmitrid/dev/forDelete/ChunkedRequestProject/src/test/resources/testFiles/125Mb_video.mp4");
+
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+        HttpPost httpPost = new HttpPost("http://127.0.0.1:8080/api/speechRecords/video/test");
+
+        /*HttpEntity multipartEntity = MultipartEntityBuilder
+                .create()
+                .addBinaryBody("upload_file", file, ContentType.create("application/octet-stream"), "filename")
+                .build();*/
+
+
+        FileEntity fileEntity = new FileEntity(file, ContentType.APPLICATION_OCTET_STREAM);
+        fileEntity.setChunked(true);
+
+        ProgressListener2 pListener =
+                percentage -> {
+                    assertFalse(Float.compare(percentage, 100) > 0);
+                };
+        httpPost.setEntity(new ProgressEntityWrapper(fileEntity, pListener));
+
+
+//        httpPost.setHeader("transfer-encoding", "chunked");
+        httpPost.setHeader("x-auth-token", xAuthToken);
+//        httpPost.setEntity(fileEntity);
+        HttpResponse response = httpclient.execute(httpPost);
+        HttpEntity result = response.getEntity();
+        System.err.println(response.getStatusLine());
+
+    }
+
+    @GetMapping("/okhttp_simple")
+    public void getSimple(HttpServletRequest httpServletRequest) throws IOException {
+        String xAuthToken = httpServletRequest.getHeader("x-auth-token");
+//        File file = new File("/home/dmitrid/dev/forDelete/ChunkedRequestProject/src/test/resources/testFiles/testVideo_57sec.mp4");
+//        File file = new File("/home/dmitrid/dev/forDelete/ChunkedRequestProject/src/test/resources/testFiles/testVideo_15Mb.mp4");
+        File file = new File("/home/dmitrid/dev/forDelete/ChunkedRequestProject/src/test/resources/testFiles/125Mb_video.mp4");
+
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/octet-stream"), file);
+
+        OkHttpClient okHttpClient = new OkHttpClient.Builder().callTimeout(60, TimeUnit.SECONDS).build();
+        Request request = new Request.Builder()
+                .url("http://127.0.0.1:8080/api/speechRecords/video/test")
+                .post(requestBody)
+                .header("x-auth-token", xAuthToken)
+//                    .header("x-auth-token", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0U2FsZXNQZXJzb24xQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX1NBTEVTX1BFUlNPTiIsImV4cCI6MTYyMzgyMzk4MH0.RecndWb4GlAMJtp9jZeko6YDbVF6dqnh2UGa0w0SNrADWGkpG26WQLAZBfyCG6uXiRlZuSEjT3dcWx9XSX-lcQ")
+//                .header("x-auth-token", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvcGVyYXRvcjFAZ21haWwuY29tIiwiYXV0aCI6IlJPTEVfT1BFUkFUT1IiLCJleHAiOjE1MzYwNTE1NjF9.aXqStSSKu0MJQzDepbiRKOCh1hOAao_gkTy5_ZnDdd0F6SfbszoWWIIY7eD_J3mhUk8qColz5zx3gGlBAqR_qw")
+//                    .header("transfer-encoding", "chunked")
+                .build();
+
+        Call call = okHttpClient.newCall(request);
+        Response response = call.execute();
+        System.err.println("code= " + response.code());
+        System.err.println("response body= " + response.body().string());
+
+
+    }
+
+    @GetMapping("/okhttp_multipart")
+    public void getMultipart(HttpServletRequest httpServletRequest) throws IOException {
+        String xAuthToken = httpServletRequest.getHeader("x-auth-token");
+//        File file = new File("/home/dmitrid/dev/forDelete/ChunkedRequestProject/src/test/resources/testFiles/testVideo_57sec.mp4");
+        File file = new File("/home/dmitrid/dev/forDelete/ChunkedRequestProject/src/test/resources/testFiles/testVideo_15Mb.mp4");
+        OkHttpClient okHttpClient = new OkHttpClient.Builder().callTimeout(60, TimeUnit.SECONDS).build();
+
+        RequestBody multipartBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("file",
+                        "file.txt",
+                        RequestBody.create(MediaType.parse("application/octet-stream"), file))
+                .build();
+
+        Request multipartRequest = new Request.Builder()
+                .url("http://127.0.0.1:8080/api/speechRecords/video/test")
+                .post(multipartBody)
+                .header("x-auth-token", xAuthToken)
+//                    .header("transfer-encoding", "chunked")
+                .build();
+
+        Call multipartCall = okHttpClient.newCall(multipartRequest);
+        Response multipartResponse = multipartCall.execute();
+        System.err.println("code= " + multipartResponse.code());
+        System.err.println("response body= " + multipartResponse.body().string());
+    }
+
+
+    @GetMapping("/okhttp_progress")
+    public void getProgress(HttpServletRequest httpServletRequest) throws IOException {
+        String xAuthToken = httpServletRequest.getHeader("x-auth-token");
+        File file = new File("/home/dmitrid/dev/forDelete/ChunkedRequestProject/src/test/resources/testFiles/testVideo_57sec.mp4");
+//        File file = new File("/home/dmitrid/dev/forDelete/ChunkedRequestProject/src/test/resources/testFiles/125Mb_video.mp4");
+//        File file = new File("/home/dmitrid/dev/forDelete/ChunkedRequestProject/src/test/resources/testFiles/testVideo_15Mb.mp4");
+
+        OkHttpClient okHttpClient = new OkHttpClient.Builder().callTimeout(60, TimeUnit.SECONDS).build();
+
+        /*RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("file",
+                        "file.txt",
+                        RequestBody.create(MediaType.parse("application/octet-stream"),
+                                file))
+                .build();*/
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/octet-stream"), file);
+
+        ProgressListener listener
+                = (bytesWritten, contentLength) -> {
+            float percentage = 100f * bytesWritten / contentLength;
+//            assertFalse(Float.compare(percentage, 100) > 0);
+            if (percentage == 100) {
+                System.err.println("bytesWritten= " + bytesWritten);
+                System.err.println("KBytes= " + bytesWritten / 1024);
+                System.err.println("MBytes= " + bytesWritten / (1024 * 1024));
+            }
+        };
+
+        ProgressRequestWrapper countingBody
+                = new ProgressRequestWrapper(requestBody, listener);
+
+        Request request = new Request.Builder()
+                .url("http://127.0.0.1:8080/api/speechRecords/video/test")
+                .post(countingBody)
+                .header("x-auth-token", xAuthToken)
+                .build();
+
+        Call call = okHttpClient.newCall(request);
+        Response response = call.execute();
+
+        System.err.println("code= " + response.code());
+        System.err.println("response body= " + response.body().string());
+    }
+
+    //-------------------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------------
+    public interface ProgressListener {
+        void onRequestProgress(long bytesWritten, long contentLength);
+    }
+
+    class ProgressRequestWrapper extends RequestBody {
+
+        protected RequestBody delegate;
+        protected ProgressListener listener;
+
+        protected CountingSink countingSink;
+
+        public ProgressRequestWrapper(RequestBody delegate, ProgressListener listener) {
+            this.delegate = delegate;
+            this.listener = listener;
+        }
+
+        @Override
+        public MediaType contentType() {
+            return delegate.contentType();
+        }
+
+        @Override
+        public long contentLength() throws IOException {
+            return delegate.contentLength();
+        }
+
+        @Override
+        public void writeTo(BufferedSink sink) throws IOException {
+            BufferedSink bufferedSink;
+            countingSink = new CountingSink(sink);
+            bufferedSink = Okio.buffer(countingSink);
+            delegate.writeTo(bufferedSink);
+            bufferedSink.flush();
+        }
+
+        protected final class CountingSink extends ForwardingSink {
+
+            private long bytesWritten = 0;
+
+            public CountingSink(Sink delegate) {
+                super(delegate);
+            }
+
+            @Override
+            public void write(Buffer source, long byteCount) throws IOException {
+                super.write(source, byteCount);
+                bytesWritten += byteCount;
+                listener.onRequestProgress(bytesWritten, contentLength());
+            }
+        }
+    }
+
+    /*class CountingSink extends ForwardingSink {
+
+        private long bytesWritten = 0;
+
+        public CountingSink(Sink delegate) {
+            super(delegate);
+        }
+
+        @Override
+        public void write(Buffer source, long byteCount)
+                throws IOException {
+            super.write(source, byteCount);
+
+            bytesWritten += byteCount;
+            listener.onRequestProgress(bytesWritten, contentLength());
+        }
+    }*/
+//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------
+    class ProgressEntityWrapper extends HttpEntityWrapper {
+        private ProgressListener2 listener;
+
+        public ProgressEntityWrapper(HttpEntity entity, ProgressListener2 listener) {
+            super(entity);
+            this.listener = listener;
+        }
+
+        @Override
+        public void writeTo(OutputStream outstream) throws IOException {
+            super.writeTo(new CountingOutputStream(outstream, listener, getContentLength()));
+        }
+    }
+
+    public static class CountingOutputStream extends FilterOutputStream {
+        private ProgressListener2 listener;
+        private long transferred;
+        private long totalBytes;
+
+        public CountingOutputStream(
+                OutputStream out, ProgressListener2 listener, long totalBytes) {
+            super(out);
+            this.listener = listener;
+            transferred = 0;
+            this.totalBytes = totalBytes;
+        }
+
+        @Override
+        public void write(byte[] b, int off, int len) throws IOException {
+            out.write(b, off, len);
+            transferred += len;
+            listener.progress(getCurrentProgress());
+        }
+
+        @Override
+        public void write(int b) throws IOException {
+            out.write(b);
+            transferred++;
+            listener.progress(getCurrentProgress());
+        }
+
+        private float getCurrentProgress() {
+            return ((float) transferred / totalBytes) * 100;
+        }
+    }
+
+    interface ProgressListener2 {
+        void progress(float percentage);
+    }
+}

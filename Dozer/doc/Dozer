@@ -1,6 +1,9 @@
 ------------------------------------------------------------------------------------------------------------------------
 A Guide to Mapping With Dozer
     https://www.baeldung.com/dozer
+
+Custom Mappings Via Dozer XML Files
+    http://dozer.sourceforge.net/documentation/mappings.html
 ------------------------------------------------------------------------------------------------------------------------
 Dozer is a Java Bean to Java Bean mapper that recursively copies data from one object to another, attribute by attribute.
 
