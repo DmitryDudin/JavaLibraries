@@ -1,0 +1,61 @@
+------------------------------------------------------------------------------------------------------------------------
+A Guide to Mapping With Dozer
+    https://www.baeldung.com/dozer
+------------------------------------------------------------------------------------------------------------------------
+Dozer is a Java Bean to Java Bean mapper that recursively copies data from one object to another, attribute by attribute.
+
+Dozer also allows you to specify custom conversions via XML.
+
+We need to make sure to include the default or zero argument constructors, since Dozer uses reflection under the hood.
+
+Dozer can map an existing object to another as long as it finds attributes of the same name in both classes.
+
+If any of the mapped attributes are of different data types,
+the Dozer mapping engine will automatically perform a data type conversion.
+
+However, in real world applications, there will be countless times where the two data objects we're mapping
+won't have fields that share a common property name.
+To solve this, Dozer gives us an option to create a custom mapping configuration in XML.
+
+Properties that are of the same name do not need to be specified in the mapping XML file.
+Dozer automatically maps all fields with the same property name from the source object into the destination object.
+
+The Dozer mapping engine is bi-directional.
+
+We can add custom converters.
+------------------------------------------------------------------------------------------------------------------------
+<mappings> as our root element, which has a child <mapping>
+
+<mapping wildcard="false"> - we are telling Dozer to only map fields we have explicitly specified in the XML.
+
+<mapping wildcard="true"> - we want all fields in the source object to be mapped to their appropriate destination fields;
+                            By default, wildcard is true.
+
+------------------------------------------------------------------------------------------------------------------------
+<configuration>
+        <custom-converters>
+            <converter type="com.baeldung.dozer.MyCustomConvertor">
+                <class-a>com.baeldung.dozer.Personne3</class-a>
+                <class-b>com.baeldung.dozer.Person3</class-b>
+            </converter>
+        </custom-converters>
+    </configuration>
+------------------------------------------------------------------------------------------------------------------------
+collection mapping:
+
+    <!-- converting TheFirstSubClass List to
+         TheFirstSubClassPrime List -->
+    <field>
+      <a>hintList</a>
+      <b>hintList</b>
+      <b-hint>org.dozer.vo.TheFirstSubClassPrime</b-hint>
+    </field>
+
+    1.	Tag <class-a> value source class
+    2.	Tag <class-b> value destination
+    3.	Tag <a> value collection variable in source class
+    4.	Tag <b> value collection variable in destination class
+    5.	Tag <a-hint> Object type of collection defines as tag <a> value.
+    6.	Tag <b-hint> Object type of collection defines as tag <b> value.
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------

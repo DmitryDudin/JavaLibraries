@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+    <mapping>
+        <class-a>ua.com.javatraining.xmlMapping.Personne</class-a>
+        <class-b>ua.com.javatraining.xmlMapping.Person</class-b>
+        <field>
+            <a>nom</a>
+            <b>name</b>
+        </field>
+        <field>
+            <a>surnom</a>
+            <b>nickname</b>
+        </field>
+
+        <field>
+            <a>authoritiesFranches</a>
+            <b>authoritiesEngs</b>
+            <a-hint>ua.com.javatraining.xmlMapping.AuthorityFranch</a-hint>
+            <b-hint>ua.com.javatraining.xmlMapping.AuthorityEng</b-hint>
+        </field>
+
+    </mapping>
+
+</mappings>
