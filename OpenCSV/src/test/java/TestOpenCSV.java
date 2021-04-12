@@ -18,6 +18,7 @@ public class TestOpenCSV {
     public void testss() throws ParseException {
         CsvReaderClass.mapCsvStringToEnitty(csvString);
     }
+
 }
 
 //  http://www.journaldev.com/12014/opencsv-csvreader-csvwriter-example

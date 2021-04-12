@@ -10,7 +10,9 @@ import java.util.Date;
 import java.util.List;
 
 public class CsvReaderClass {
+
     public static List<StudentProfile> mapCsvStringToEnitty(String csvString) throws ParseException {
+
         List<StudentProfile> studentProfiles = null;
         try (com.opencsv.CSVReader reader = new com.opencsv.CSVReader(new BufferedReader(new StringReader(csvString), ','))) {
             ColumnPositionMappingStrategy<StudentProfile> beanStrategy = new ColumnPositionMappingStrategy<>();
