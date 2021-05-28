@@ -1,0 +1,59 @@
+plugins {
+    id 'java'
+}
+
+group 'ua.com.javatraining'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+//    Apache Commons Bytecode Engineering Library
+    implementation group: 'org.apache.bcel', name: 'bcel', version: '6.5.0'
+    testCompile group: 'org.apache.bcel', name: 'bcel', version: '6.5.0'
+
+    //todo avassist (JAVA programming ASSISTant) makes Java bytecode manipulation simple. It is a class library for editing bytecodes in Java.
+    implementation group: 'org.javassist', name: 'javassist', version: '3.28.0-GA'
+
+
+    implementation group: 'com.viridiansoftware', name: 'java-class-parser', version: '1.0.3'
+    testCompile group: 'com.viridiansoftware', name: 'java-class-parser', version: '1.0.3'
+
+
+//https://javaparser.org/
+// https://github.com/javaparser/javaparser
+    implementation group: 'com.github.javaparser', name: 'javaparser-symbol-solver-core', version: '3.22.1'
+    testCompile group: 'com.github.javaparser', name: 'javaparser-symbol-solver-core', version: '3.22.1'
+    implementation group: 'com.github.javaparser', name: 'javaparser-core', version: '3.22.1'
+    testCompile group: 'com.github.javaparser', name: 'javaparser-core', version: '3.22.1'
+    implementation 'com.github.javaparser:javaparser-core-serialization:3.22.1'
+    testCompile 'com.github.javaparser:javaparser-core-serialization:3.22.1'
+
+//https://github.com/forge/roaster
+    implementation group: 'org.jboss.forge.roaster', name: 'roaster-api', version: '2.22.3.Final'
+    testCompile group: 'org.jboss.forge.roaster', name: 'roaster-api', version: '2.22.3.Final'
+    implementation group: 'org.jboss.forge.roaster', name: 'roaster-jdt', version: '2.22.3.Final'
+    testCompile group: 'org.jboss.forge.roaster', name: 'roaster-jdt', version: '2.22.3.Final'
+
+//https://www.baeldung.com/reflections-library
+    implementation group: 'org.reflections', name: 'reflections', version: '0.9.12'
+    testCompile group: 'org.reflections', name: 'reflections', version: '0.9.12'
+// https://mvnrepository.com/artifact/org.dom4j/dom4j
+    implementation group: 'org.dom4j', name: 'dom4j', version: '2.1.3'
+    testCompile group: 'org.dom4j', name: 'dom4j', version: '2.1.3'
+
+
+//Apache Commons BeanUtils
+    implementation group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4'
+    testCompile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4'
+
+// Apache Commons Crypto
+    testCompile group: 'org.apache.commons', name: 'commons-crypto', version: '1.1.0'
+
+}
