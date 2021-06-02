@@ -1,0 +1,15 @@
+-----------------------------------------------------------------------------------------------------------------------
+Java Agent - A powerful tool you might have missed
+    https://sathiyakugan.medium.com/java-agent-a-powerful-tool-you-might-have-missed-fe6a85884481
+    https://github.com/Sathiyakugan/javaagent-example
+    https://github.com/Sathiyakugan/example-playapp-javaagent
+
+The Attach API
+    https://blogs.oracle.com/corejavatechtips/the-attach-api
+
+how to set jdk.attach.allowAttachSelf=true globally
+    https://stackoverflow.com/questions/50498102/how-to-set-jdk-attach-allowattachself-true-globally
+
+Guide to Java Instrumentation
+    https://www.baeldung.com/java-instrumentation
+-----------------------------------------------------------------------------------------------------------------------

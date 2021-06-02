@@ -1,0 +1,18 @@
+-----------------------------------------------------------------------------------------------------------------------
+Including an Agent in an Executable JAR file
+
+в манифесте изполняемого джарника должен быть Launcher-Agent-Class attribute to specify the class name of an agent
+to start before the application main method is invoked.
+The Java virtual machine attempts to invoke the following method on the agent class:
+    public static void agentmain(String agentArgs, Instrumentation inst)
+
+The value of the agentArgs parameter is always the empty string.
+
+If the agent cannot be started, for example the agent class cannot be loaded, the agent class does not define
+a conformant agentmain method, or the agentmain method throws an uncaught exception or error, the JVM will abort.
+-----------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+

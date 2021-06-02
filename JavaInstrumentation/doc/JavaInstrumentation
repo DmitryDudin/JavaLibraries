@@ -1,0 +1,76 @@
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+In this tutorial, we're going to talk about Java Instrumentation API.
+It provides the ability to add byte-code to existing compiled Java classes.
+-----------------------------------------------------------------------------------------------------------------------
+What Is a Java Agent:
+
+In general, a java agent is just a specially crafted jar file.
+It utilizes the Instrumentation API that the JVM provides to alter existing byte-code that is loaded in a JVM.
+
+For an agent to work, we need to define two methods:
+- premain – will statically load the agent using -javaagent parameter at JVM startup
+- agentmain – will dynamically load the agent into the JVM using the Java Attach API
+
+-----------------------------------------------------------------------------------------------------------------------
+To be able to use the Java agent, we must first load it.
+We have two types of load:
+- static – makes use of the premain to load the agent using -javaagent option
+- dynamic – makes use of the agentmain to load the agent into the JVM using the Java Attach API
+
+---
+Static Load
+Loading a Java agent at application startup is called static load.
+Static load modifies the byte-code at startup time before any code is executed.
+
+Keep in mind that the static load uses the premain method, which will run before any application code runs,
+to get it running we can execute:
+    java -javaagent:agent.jar -jar application.jar
+
+It's important to note that we should always put the –javaagent parameter before the –jar parameter.
+
+The -javaagent option may be used multiple times on the same command-line, thus starting multiple agents.
+
+If the agent cannot be started (for example, because the agent class cannot be loaded,
+or because the agent class does not have an appropriate premain method), the JVM will abort.
+---
+Dynamic Load
+The procedure of loading a Java agent into an already running JVM is called dynamic load.
+The agent is attached using the Java Attach API.(https://docs.oracle.com/en/java/javase/11/docs/api/jdk.attach/module-summary.html)
+
+In cases where an implementation supports the starting of agents after the VM has started the following applies:
+    1. The manifest of the agent JAR must contain the attribute Agent-Class in its main manfiest.
+       The value of this attribute is the name of the agent class.
+    2. The agent class must implement a public static agentmain method.
+
+When the agent is started after VM startup the premain method is not invoked.
+
+If the agent cannot be started (for example, because the agent class cannot be loaded,
+or because the agent class does not have a conformant agentmain method), the JVM will not abort.
+If the agentmain method throws an uncaught exception it will be ignored (but may be logged by the JVM for troubleshooting purposes).
+---
+-----------------------------------------------------------------------------------------------------------------------
+We know that every Java agent needs at least one of the premain or agentmain methods.
+The latter is used for dynamic load, while the former is used to statically load a java agent into a JVM.
+-----------------------------------------------------------------------------------------------------------------------
+Creating an Agent Manifest File
+
+Finally, in order to get a working Java agent, we'll need a manifest file with a couple of attributes.
+Hence, we can find the full list of manifest attributes in the Instrumentation Package official documentation.
+(https://docs.oracle.com/en/java/javase/11/docs/api/java.instrument/java/lang/instrument/package-summary.html)
+
+-----------------------------------------------------------------------------------------------------------------------
+JDK_JAVA_OPTIONS=-Djdk.attach.allowAttachSelf=true
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,63 @@
+plugins {
+    id 'java'
+//    id 'idea'
+//    id 'java-library'
+}
+
+group 'ua.com.javatraining'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 11
+
+//configurations {
+//    antContrib
+//    externalLibs
+//    deploymentTools
+//}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/com.sun/tools
+//    system group: 'com.sun', name: 'tools', version: '1.6.0', systemPath: '${java.home}/../lib/tools.jar'
+//    compile files("${System.getProperty('java.home')}/../lib/tools.jar")
+//    testCompile files("${System.getProperty('java.home')}/../lib/tools.jar")
+//    externalLibs files("${System.getProperty('java.home')}/../lib/tools.jar")
+//    implementation files("${System.properties['java.home']}/../lib/tools.jar")
+//    testImplementation files("${System.properties['java.home']}/../lib/tools.jar")
+//    implementation files("${System.getProperty('java.home')}/../lib/tools.jar")
+//    testImplementation files("${System.getProperty('java.home')}/../lib/tools.jar")
+    // Java Attach API
+//    implementation files('C:\\Program Files\\Java\\jdk1.8.0_261\\lib\\tools.jar')
+
+//    compile files("${System.getProperty('java.home')}/../lib/tools.jar")
+//    testCompile files("${System.getProperty('java.home')}/../lib/tools.jar")
+
+//    compile files(org.gradle.internal.jvm.Jvm.current().toolsJar)
+//    testCompile files(org.gradle.internal.jvm.Jvm.current().toolsJar)
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+    testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+    implementation group: 'ch.qos.logback', name: 'logback-core', version: '1.2.3'
+
+// Javassist
+    implementation group: 'javassist', name: 'javassist', version: '3.12.1.GA'
+    testCompile group: 'javassist', name: 'javassist', version: '3.12.1.GA'
+
+//ASM, a very small and fast Java bytecode manipulation framework
+    implementation group: 'org.ow2.asm', name: 'asm', version: '9.1'
+    testCompile group: 'org.ow2.asm', name: 'asm', version: '9.1'
+    implementation group: 'org.ow2.asm', name: 'asm-util', version: '9.1'
+    testCompile group: 'org.ow2.asm', name: 'asm-util', version: '9.1'
+
+//lombok
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.20'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
+}
