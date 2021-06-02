@@ -1,0 +1,81 @@
+plugins {
+    id 'java'
+    id 'java-library'
+}
+
+group 'ua.com.javatraining'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 11
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+    testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+    implementation group: 'ch.qos.logback', name: 'logback-core', version: '1.2.3'
+
+// Javassist
+//    implementation group: 'javassist', name: 'javassist', version: '3.12.1.GA'
+//    testCompile group: 'javassist', name: 'javassist', version: '3.12.1.GA'
+// https://mvnrepository.com/artifact/org.javassist/javassist
+    implementation group: 'org.javassist', name: 'javassist', version: '3.28.0-GA'
+    testImplementation group: 'org.javassist', name: 'javassist', version: '3.28.0-GA'
+
+//ASM, a very small and fast Java bytecode manipulation framework
+    implementation group: 'org.ow2.asm', name: 'asm', version: '9.1'
+    testCompile group: 'org.ow2.asm', name: 'asm', version: '9.1'
+    implementation group: 'org.ow2.asm', name: 'asm-util', version: '9.1'
+    testCompile group: 'org.ow2.asm', name: 'asm-util', version: '9.1'
+
+//lombok
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.20'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
+}
+
+//not working for fat jat
+jar {
+    manifest {
+        attributes(
+//                "Agent-Class": "ua.com.javatraining.JavaAgent",
+//                "Can-Redefine-Classes": true,
+//                "Can-Retransform-Classes": true,
+                "Premain-Class": "ua.com.javatraining.JavaAgent"
+        )
+    }
+//    doFirst {
+//        from { configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) } }
+//    }
+//    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+
+}
+
+//https://stackoverflow.com/questions/4871656/using-gradle-to-build-a-jar-with-dependencies
+//https://docs.gradle.org/current/userguide/working_with_files.html#sec:creating_uber_jar_example
+tasks.register('uberJar', Jar) {
+
+    manifest {
+        attributes(
+                "Premain-Class": "ua.com.javatraining.JavaAgent"
+        )
+    }
+
+    archiveClassifier = 'uber'
+
+    from sourceSets.main.output
+
+    dependsOn configurations.runtimeClasspath
+    from {
+        configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
+    }
+}
