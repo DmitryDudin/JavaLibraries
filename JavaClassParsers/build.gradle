@@ -53,7 +53,14 @@ dependencies {
     implementation group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4'
     testCompile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4'
 
-// Apache Commons Crypto
+// Apache Commons Crypto (ReflectionUtils)
     testCompile group: 'org.apache.commons', name: 'commons-crypto', version: '1.1.0'
+
+
+//ASM, a very small and fast Java bytecode manipulation framework
+    implementation group: 'org.ow2.asm', name: 'asm', version: '9.1'
+    testCompile group: 'org.ow2.asm', name: 'asm', version: '9.1'
+    implementation group: 'org.ow2.asm', name: 'asm-util', version: '9.1'
+    testCompile group: 'org.ow2.asm', name: 'asm-util', version: '9.1'
 
 }
