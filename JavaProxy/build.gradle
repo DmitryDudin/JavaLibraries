@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+}
+
+group 'ua.com.javatraining'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    // https://mvnrepository.com/artifact/javassist/javassist
+    implementation group: 'javassist', name: 'javassist', version: '3.12.1.GA'
+    testCompile group: 'javassist', name: 'javassist', version: '3.12.1.GA'
+
+//ASM, a very small and fast Java bytecode manipulation framework
+    implementation group: 'org.ow2.asm', name: 'asm', version: '9.1'
+    testCompile group: 'org.ow2.asm', name: 'asm', version: '9.1'
+    implementation group: 'org.ow2.asm', name: 'asm-util', version: '9.1'
+    testCompile group: 'org.ow2.asm', name: 'asm-util', version: '9.1'
+
+}

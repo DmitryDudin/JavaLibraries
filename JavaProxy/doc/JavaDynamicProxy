@@ -1,0 +1,11 @@
+Dynamic Proxies in Java
+https://www.baeldung.com/java-dynamic-proxies
+
+
+-----------------------------------------------------------------------------------------------------------------------
+A dynamic proxy can be thought of as a kind of Facade,
+but one that can pretend to be an implementation of any interface.
+Under the cover, it routes all method invocations to a single handler – the invoke() method.
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
