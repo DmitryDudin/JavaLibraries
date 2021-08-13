@@ -41,7 +41,7 @@ public class AgentLoader {
             String jvmPid = jvmProcessOpt.get();
             LOGGER.info("Attaching to target JVM with PID: " + jvmPid);
             VirtualMachine jvm = VirtualMachine.attach(jvmPid);
-            jvm.loadAgent(agentFile.getAbsolutePath());
+            jvm.loadAsgent(agentFile.getAbsolutePath());
             jvm.detach();
             LOGGER.info("Attached to target JVM and loaded Java agent successfully");
         } catch (Exception e) {

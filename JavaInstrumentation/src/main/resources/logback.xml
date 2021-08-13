@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="5 seconds">
+<!--<configuration
+            xmlns="http://ch.qos.logback/xml/ns/logback"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://ch.qos.logback/xml/ns/logback https://raw.githubusercontent.com/enricopulatzo/logback-XSD/master/src/main/xsd/logback.xsd">-->
+
+<!--<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.padual.com/java/logback.xsd"
+                   debug="true" packagingData="true" scan="true" scanPeriod="30 seconds">-->
+
+    <springProperty scope="context" name="appname" source="spring.application.name"/>
+    <springProperty scope="context" name="port" source="server.port"/>
+    <springProperty scope="context" name="host" source="HOSTNAME"/>
+    <!--<springProperty scope="context"/>-->
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>utf-8</charset>
+            <pattern>[%d{ISO8601}][%-5level][%-20.20thread][%logger{36}] - %msg%n</pattern>
+            <!--<pattern>[%d{ISO8601}][%-5level][%thread][%logger{0}] - %msg%n</pattern>-->
+            <!--<pattern>[%d{ISO8601}][%-5level][%thread][%logger{0}] [%X{client host}] [%X{req.remoteHost}] - %msg%n</pattern>-->
+            <!--<pattern>[%d{ISO8601}][%-5level][%thread][%logger{0}][%X{rid}][%X{remoteHost}][%X{username}][%msg]%n</pattern>-->
+<!--            <pattern>[%d{ISO8601}][%-5level][%logger{0}][%X{rid}][%X{remoteHost}][%X{username}][%msg]%n</pattern>-->
+        </encoder>
+    </appender>
+
+
+
+
+
+    <!--<logger name="javax.activation" level="WARN"/>
+    <logger name="javax.mail" level="WARN"/>
+    <logger name="javax.xml.bind" level="WARN"/>
+    <logger name="ch.qos.logback" level="WARN"/>
+    &lt;!&ndash;<logger name="com.codahale.metrics" level="WARN"/>&ndash;&gt;
+    <logger name="com.codahale.metrics" level="debug"/>
+    <logger name="com.hazelcast" level="INFO"/>
+    <logger name="com.ryantenney" level="WARN"/>
+    <logger name="com.sun" level="WARN"/>
+    <logger name="com.zaxxer" level="WARN"/>
+    <logger name="io.undertow" level="WARN"/>
+    <logger name="io.undertow.websockets.jsr" level="ERROR"/>
+    <logger name="org.apache" level="WARN"/>
+    <logger name="org.apache.catalina.startup.DigesterFactory" level="OFF"/>
+    <logger name="org.bson" level="WARN"/>
+    <logger name="org.hibernate.validator" level="WARN"/>
+    <logger name="org.hibernate" level="INFO"/>
+    <logger name="org.hibernate.ejb.HibernatePersistence" level="OFF"/>
+    <logger name="org.springframework" level="WARN"/>
+    <logger name="org.springframework.web" level="WARN"/>
+    <logger name="org.springframework.security" level="WARN"/>
+    <logger name="org.springframework.cache" level="WARN"/>
+    <logger name="org.thymeleaf" level="WARN"/>
+    <logger name="org.xnio" level="WARN"/>
+    <logger name="springfox" level="WARN"/>
+    <logger name="sun.rmi" level="WARN"/>
+    <logger name="liquibase" level="debug"/>
+    <logger name="LiquibaseSchemaResolver" level="debug"/>
+    <logger name="sun.net.www" level="INFO"/>
+    <logger name="sun.rmi.transport" level="WARN"/>
+    <logger name="io.micrometer" level="DEBUG"/>
+    <logger name="com.amazonaws" level="WARN"/>
+    <logger name="org.dbunit" level="INFO"/>-->
+
+<!--    <logger level="error" name="org.apache.coyote.AbstractProtocol"/>-->
+    <logger name="sun.net.www" level="INFO"/>
+
+    <!--<root level="debug">-->
+    <root>
+        <appender-ref ref="CONSOLE"/    >
+    </root>
+
+    <!-- https://logback.qos.ch/manual/configuration.html#shutdownHook and https://jira.qos.ch/browse/LOGBACK-1090 -->
+    <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
+
+</configuration>

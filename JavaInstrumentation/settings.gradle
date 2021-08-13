@@ -1,2 +1,4 @@
 rootProject.name = 'JavaInstrumentation'
+include 'JavaInstrumentation_agent'
+include 'save_bytecode_agent'
 
